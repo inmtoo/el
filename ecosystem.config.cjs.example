@@ -1,0 +1,11 @@
+module.exports = {
+    apps: [
+        {
+            name: 'VladaFront',
+            port: '9010',
+            exec_mode: 'cluster',
+            instances: 'max',
+            script: './.output/server/index.mjs'
+        }
+    ]
+}
