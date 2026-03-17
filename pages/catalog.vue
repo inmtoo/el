@@ -7,10 +7,10 @@
       <div class="container">
         <div class="main-promo__row">
           <div class="main-promo__left">
-            <p>Технологии контента Vlada Group</p>
-            <h1>Аренда оборудования для съемок кино, рекламы, клипов</h1>
+            <p>Каталог зарядных станций</p>
+            <h1>Зарядные станции для бизнеса и дома</h1>
             <UITheButton
-              title="Записаться на тест"
+              title="Получить консультацию"
               @click="openPopup"
             ></UITheButton>
           </div>
@@ -21,8 +21,8 @@
             ]"
           >
             <img
-              src="/images/main-1.jpg"
-              alt="Кинорентал и площадка для съемок VLADAGROUP"
+              src="/images/main-promo.webp"
+              alt="Каталог зарядных станций для электромобилей"
             />
 
             <div v-if="video" class="main-promo__video-btn" @click="showVideo">
@@ -43,18 +43,21 @@
       </div>
     </section>
 
-    <section class="st-section rent-block">
+    <section class="st-section features">
       <div class="container">
         <UITheSectionTitle
-          :title="rentTitle"
-          :subtitle="rentSubtitle"
-        ></UITheSectionTitle>
-        <div class="rent-block__row">
-          <TheRentItem
-            v-for="item in rentEquipments"
-            :key="item.id"
+          title="Каталог зарядных станций"
+          subtitle="Подберите зарядную станцию под ваш электромобиль и сценарий использования: дом, паркинг, офис, ТЦ, отель или АЗС."
+        />
+        <div class="features__row">
+          <TheItem
+            v-for="(item, index) in catalogItems"
+            :key="index"
             :item="item"
-          ></TheRentItem>
+          />
+        </div>
+        <div class="catalog-pagination">
+          <Pagination v-model:page="currentPage" :max-page="totalPages" />
         </div>
       </div>
     </section>
@@ -67,7 +70,7 @@
           <UITheSectionTitle
             :className="'section-title--center'"
             :title="'Подписывайтесь на нас'"
-            :subtitle="'Узнавайте первыми о новых кейсах, решениях и спецпредложениях'"
+            :subtitle="'Узнавайте первыми о новых моделях, установках, кейсах и спецпредложениях по зарядной инфраструктуре'"
           ></UITheSectionTitle>
           <div class="subscribe__social">
             <a href="https://rutube.ru/channel/71798736/">
@@ -154,59 +157,120 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import TheRentItem from "~/components/UI/TheRentItem.vue";
-import TheSwiperPage from "~/components/UI/TheSwiperPage.vue";
-import { getCategories } from "~/api/categories";
-import { useModal } from "~/composables/useModal";
 import FAQ from "~/components/blocks/FAQ.vue";
+import Pagination from "~/components/partials/Pagination.vue";
+import { useModal } from "~/composables/useModal";
 
 useHead({
-  title:
-    "Vlada Group— Аренда съемочного оборудования в Москве для кино и рекламы",
+  title: "Каталог зарядных станций | Подбор и установка зарядки под ключ",
   meta: [
     {
       name: "keywords",
       content:
-        "аренда съемочного оборудования, аренда кинокамер, аренда кинооборудования, кинорентал",
+        "зарядные станции для электромобилей, каталог зарядных станций, зарядка для дома, зарядка для бизнеса, установка зарядной станции, монтаж ЭЗС",
     },
     {
       name: "description",
       content:
-        "Весь спектр осветительного оборудования, камеры Arri и Red, мониторы для видеоконтроля и т.п. Вы можете протестировать всё у нас в рентале.",
+        "Каталог зарядных станций для электромобилей: AC и DC, от 3 до 22 кВт. Подбор под ваши задачи, консультация и установка под ключ.",
     },
     {
       property: "og:title",
       content:
-        "Vlada Group— Аренда съемочного оборудования в Москве для кино и рекламы",
+        "Каталог зарядных станций | Подбор и установка под ключ",
     },
     {
       property: "og:description",
       content:
-        "Весь спектр осветительного оборудования, камеры Arri и Red, мониторы для видеоконтроля и т.п. Вы можете протестировать всё у нас в рентале.",
+        "Выберите зарядную станцию для дома или бизнеса. Поможем с подбором, поставкой и установкой под ключ.",
     },
-    { property: "og:image", content: "/images/main-1.jpg" },
+    { property: "og:image", content: "/images/main-promo.webp" },
   ],
 });
 
 const isOpenPopup = useModal();
 
-const rentTitle = "Каталог оборудования";
-const rentSubtitle =
-  "Мы — единственная компания в стране, у которой в аренде есть камеры ведущих мировых брендов ARRI, RED, SONY с полным набором кинообъективов Signature Prime, Cooke, Master Prime, анаморфотных, макро и зум-объективов. А также мощный профессиональный свет и уникальные LED-экраны с разрешением до 8K для съемок с эффектами дополненной реальности, что позволяет создавать проекты любого уровня и масштаба. Вы можете протестировать оборудование прямо у нас на площадке, а мы поможем с подбором оптимального набора для вашего проекта.";
+const placeholderImg = "/images/main-promo.webp";
 
-const rentEquipments = ref();
-await Promise.all([
-  getCategories().then((data) => {
-    rentEquipments.value = data.map((el) => {
-      return {
-        id: el.id,
-        title: el.name,
-        image: el.thumbnail,
-        link: `/category/${el.slug}`,
-      };
-    });
-  }),
-]);
+const catalogItems = [
+  {
+    id: 1,
+    title: "MIRA",
+    text: "AC · 11–22 кВт",
+    image: placeholderImg,
+    link: "/catalog",
+  },
+  {
+    id: 2,
+    title: "MIRA 2",
+    text: "AC · 11–22 кВт",
+    image: placeholderImg,
+    link: "/catalog",
+  },
+  {
+    id: 3,
+    title: "MIRA 3",
+    text: "AC · 11–22 кВт",
+    image: placeholderImg,
+    link: "/catalog",
+  },
+  {
+    id: 4,
+    title: "Enel X",
+    text: "AC · 7,4–22 кВт",
+    image: placeholderImg,
+    link: "/catalog",
+  },
+  {
+    id: 5,
+    title: "MIRA",
+    text: "AC · 11–22 кВт",
+    image: placeholderImg,
+    link: "/catalog",
+  },
+  {
+    id: 6,
+    title: "MIRA 2",
+    text: "AC · 11–22 кВт",
+    image: placeholderImg,
+    link: "/catalog",
+  },
+  {
+    id: 7,
+    title: "MIRA 3",
+    text: "AC · 11–22 кВт",
+    image: placeholderImg,
+    link: "/catalog",
+  },
+  {
+    id: 8,
+    title: "Enel X",
+    text: "AC · 7,4–22 кВт",
+    image: placeholderImg,
+    link: "/catalog",
+  },
+];
+
+const route = useRoute();
+const totalPages = 68;
+
+const currentPage = ref(Number(route.query.page) || 1);
+
+watch(
+  () => route.query.page,
+  (q) => {
+    const p = Number(q) || 1;
+    if (currentPage.value !== p) currentPage.value = p;
+  },
+  { immediate: true }
+);
+
+watch(currentPage, (p) => {
+  const q = Number(route.query.page) || 1;
+  if (p !== q && p >= 1 && p <= totalPages) {
+    navigateTo({ path: route.path, query: { ...route.query, page: p } });
+  }
+});
 
 const solutionsTitle = "Пространство для съемок и мероприятий";
 const solutionsSubtitle =
@@ -580,7 +644,7 @@ function closePopup() {
 
 const breadcrumbs = [
   { title: "Главная", link: "/" },
-  { title: "Аренда съемочного оборудования", link: "" },
+  { title: "Каталог зарядных станций", link: "" },
 ];
 
 onMounted(() => {
@@ -603,3 +667,46 @@ onMounted(() => {
   });
 });
 </script>
+
+<style scoped lang="scss">
+$gradient: linear-gradient(90deg, #66CB01 0%, #1E95D5 50%, #1E95D5 50%, #66CB01 100%);
+
+.catalog-pagination {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-start;
+
+  :deep(.pagination) {
+    margin-top: 0;
+  }
+
+  :deep(.pagination__next) {
+    display: none;
+  }
+
+  :deep(.pagination__link a) {
+    width: 3rem;
+    height: 3rem;
+    min-width: 3rem;
+    padding: 0;
+    border-radius: 50%;
+    background-color: transparent;
+    color: #333;
+    transition: none;
+  }
+
+  :deep(.pagination__link.active a) {
+    background: $gradient;
+    background-size: 200% 100%;
+    background-position: 0 0;
+    color: #fff;
+  }
+
+  :deep(.pagination__link a:hover) {
+    background: $gradient;
+    background-size: 200% 100%;
+    background-position: 0 0;
+    color: #fff;
+  }
+}
+</style>

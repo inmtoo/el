@@ -42,18 +42,18 @@
       </div>
     </section>
 
-    <section class="st-section rent-block">
+    <section class="st-section features">
       <div class="container">
         <UITheSectionTitle
           title="Каталог зарядных станций"
           subtitle="Выбор для Вас. Каталог электрозарядных станций для дома, паркингов, ТЦ, отелей и АЗС."
-        ></UITheSectionTitle>
-        <div class="rent-block__row">
-          <TheRentItem
-            v-for="item in rentEquipments"
-            :key="item.id"
+        />
+        <div class="features__row">
+          <TheItem
+            v-for="(item, index) in popularModels"
+            :key="index"
             :item="item"
-          ></TheRentItem>
+          />
         </div>
         <div class="rent-block__more">
           <NuxtLink to="/catalog" class="rent-block__more-link btn btn-primary">Показать все</NuxtLink>
@@ -81,6 +81,24 @@
         ></UITheSectionTitle>
         <div class="features__row">
           <TheItem v-for="item in serviceItems" :item="item" :key="item.id"></TheItem>
+        </div>
+      </div>
+    </section>
+
+    <section class="st-section info-block info-block--right">
+      <div class="container">
+        <div class="info-block__row">
+          <div class="info-block__text">
+            <UITheSectionTitle
+              title="Текст от директора"
+              subtitle="Мы верим, что электрический транспорт - это будущее. И наша миссия - сделать его доступным и удобным для каждого. Наши зарядные станции — это не просто устройства, это ваш шаг в зелёное будущее."
+              author="Иван Иванов"
+              position="Директор компании"
+            />
+          </div>
+          <div class="info-block__img">
+            <img src="/images/info-block.webp" alt="Директор компании" />
+          </div>
         </div>
       </div>
     </section>
@@ -330,6 +348,19 @@ const serviceItems = [
     link: "/catalog",
     target: "_self",
   },
+];
+
+const catalogPlaceholderImg = "/images/main-promo.webp";
+
+const popularModels = [
+  { id: 1, title: "MIRA", text: "Мощность: 11-22 кВт", image: catalogPlaceholderImg, link: "/catalog", target: "_self" },
+  { id: 2, title: "MIRA 2", text: "Мощность: 11-22 кВт", image: catalogPlaceholderImg, link: "/catalog", target: "_self" },
+  { id: 3, title: "MIRA 3", text: "Мощность: 11-22 кВт", image: catalogPlaceholderImg, link: "/catalog", target: "_self" },
+  { id: 4, title: "Enel X", text: "Мощность: 7,4-22 кВт", image: catalogPlaceholderImg, link: "/catalog", target: "_self" },
+  { id: 5, title: "MIRA", text: "Мощность: 11-22 кВт", image: catalogPlaceholderImg, link: "/catalog", target: "_self" },
+  { id: 6, title: "MIRA 2", text: "Мощность: 11-22 кВт", image: catalogPlaceholderImg, link: "/catalog", target: "_self" },
+  { id: 7, title: "MIRA 3", text: "Мощность: 11-22 кВт", image: catalogPlaceholderImg, link: "/catalog", target: "_self" },
+  { id: 8, title: "Enel X", text: "Мощность: 7,4-22 кВт", image: catalogPlaceholderImg, link: "/catalog", target: "_self" },
 ];
 
 const rentEquipments = ref();
