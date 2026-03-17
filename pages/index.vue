@@ -4,12 +4,10 @@
       <div class="container">
         <div class="main-promo__row">
           <div class="main-promo__left">
-            <p>Технологии контента</p>
-            <h1>Рентал профессионального оборудования и площадка для съемок</h1>
-            <UITheButton
-              title="Узнать цены"
-              @click="scrollToElem('.footer')"
-            ></UITheButton>
+            <p>Зарядная инфраструктура</p>
+            <h1>Зарядные станции для бизнеса и личного использования</h1>
+            <p class="main-promo__desc">Мы предлагаем станции для дома, бизнеса и автосервиса.</p>
+            <UITheButtonLink title="Подробнее" link="/catalog"></UITheButtonLink>
           </div>
           <div
             :class="[
@@ -18,8 +16,8 @@
             ]"
           >
             <img
-              src="/images/main-2.jpg"
-              alt="Кинорентал и площадка для съемок VLADAGROUP"
+              src="/images/main-promo.webp"
+              alt="Установка зарядных станций для электромобилей"
             />
 
             <div
@@ -29,7 +27,7 @@
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                fill="#ff8900"
+                fill="#66cb01"
                 viewBox="-7 0 32 32"
                 version="1.1"
               >
@@ -44,11 +42,11 @@
       </div>
     </section>
 
-    <!--<section class="st-section rent-block">
+    <section class="st-section rent-block">
       <div class="container">
         <UITheSectionTitle
-          :title="rentTitle"
-          :subtitle="rentSubtitle"
+          title="Каталог зарядных станций"
+          subtitle="Выбор для Вас. Каталог электрозарядных станций для дома, паркингов, ТЦ, отелей и АЗС."
         ></UITheSectionTitle>
         <div class="rent-block__row">
           <TheRentItem
@@ -57,60 +55,32 @@
             :item="item"
           ></TheRentItem>
         </div>
-      </div>
-    </section>-->
-
-    <section class="st-section features">
-      <div class="container">
-        <UITheSectionTitle
-          :title="rentTitle"
-          :subtitle="rentSubtitle"
-        ></UITheSectionTitle>
-        <div class="features__row">
-          <TheItem v-for="item in rentItems" :item="item"></TheItem>
+        <div class="rent-block__more">
+          <NuxtLink to="/catalog" class="rent-block__more-link btn btn-primary">Показать все</NuxtLink>
         </div>
       </div>
     </section>
 
-    <section class="main-promo st-section">
+    <section class="st-section features">
       <div class="container">
-        <div class="main-promo__row">
-          <div class="main-promo__left">
-            <p>Технологии событий</p>
-            <h1>Пространство и организация мероприятий</h1>
+        <UITheSectionTitle
+          :title="advantagesTitle"
+          :subtitle="advantagesSubtitle"
+        ></UITheSectionTitle>
+        <div class="features__row">
+          <TheItem v-for="item in advantagesItems" :item="item" :key="item.id"></TheItem>
+        </div>
+      </div>
+    </section>
 
-            <UITheButtonLink title="Подробнее" link="/event"></UITheButtonLink>
-          </div>
-          <div
-            :class="[
-              'main-promo__right',
-              video ? ' main-promo__right--video' : '',
-            ]"
-          >
-            <img
-              src="/images/second-event.jpg"
-              alt="Пространство для мероприятий и съемок в Москве"
-            />
-
-            <div
-              style="display: none"
-              v-if="videoMain"
-              class="main-promo__video-btn"
-              @click="showVideo(videoMain)"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="#ff8900"
-                viewBox="-7 0 32 32"
-                version="1.1"
-              >
-                <title>play</title>
-                <path
-                  d="M0 6.688v18.906c0 0.344 0.156 0.625 0.469 0.813 0.125 0.094 0.344 0.125 0.5 0.125s0.281-0.031 0.438-0.125l16.375-9.438c0.313-0.219 0.5-0.5 0.5-0.844 0-0.313-0.188-0.594-0.5-0.813l-16.375-9.438c-0.563-0.406-1.406 0.094-1.406 0.813z"
-                />
-              </svg>
-            </div>
-          </div>
+    <section class="st-section features">
+      <div class="container">
+        <UITheSectionTitle
+          :title="serviceTitle"
+          :subtitle="serviceSubtitle"
+        ></UITheSectionTitle>
+        <div class="features__row">
+          <TheItem v-for="item in serviceItems" :item="item" :key="item.id"></TheItem>
         </div>
       </div>
     </section>
@@ -145,97 +115,7 @@
           typeItem="item"
         ></TheSwiperPage>
       </div>
-    </section>
-
-    <!--<section class="st-section slider">
-      <div class="container">
-        <UITheSectionTitle
-          :title="solutionsTitle2"
-          :subtitle="solutionsSubtitle2"
-        ></UITheSectionTitle>
-        <TheSwiperPage
-          :uniqueId="'solutions2'"
-          :items="solutionsItems2"
-          :options="solutionSliderOption2"
-          typeItem="item"
-        ></TheSwiperPage>
-      </div>
-    </section>-->
-
-    <section class="st-section info-block info-block--right">
-      <div class="container">
-        <div class="info-block__row">
-          <div class="info-block__text">
-            <UITheSectionTitle
-              :title="'Добро пожаловать в мир высокого контента'"
-              :subtitle="'Мощный визуал — фактор вашего успеха. А мы проводник на пути к нему — создали внушительную инфраструктуру для вашего бизнеса, будь он в кино, рекламе, услугах или товарах.'"
-              :author="'Влада Озолина,'"
-              :position="'основатель и вдохновляющая сила VLADA GROUP'"
-            ></UITheSectionTitle>
-
-            <UITheButton
-              title="Познакомиться ближе"
-              :className="'btn-secondary'"
-              @click="scrollToElem('.footer')"
-            ></UITheButton>
-          </div>
-          <div class="info-block__img">
-            <img src="/images/vlada.jpg" alt="" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section
-      class="st-section info-block info-block--left"
-      style="display: none"
-    >
-      <div class="container">
-        <div class="info-block__row">
-          <div class="info-block__text">
-            <UITheSectionTitle
-              :title="'Заголовок инфоблока'"
-              :subtitle="'Lorem Ipsum dolor sit amet, consectetur adipiscing elit. Описание инфоблока в несколько строчек.'"
-            ></UITheSectionTitle>
-
-            <UITheButton
-              title="Какой то батон"
-              :className="'btn-secondary'"
-            ></UITheButton>
-          </div>
-          <div class="info-block__img">
-            <img src="/images/promo_image.webp" alt="" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!--<section class="st-section slider">
-      <div class="container">
-        <UITheSectionTitle
-          :title="teamTitle"
-          :subtitle="teamSubtitle"
-        ></UITheSectionTitle>
-        <TheSwiperPage
-          :uniqueId="'reviews'"
-          :items="team"
-          :options="reviewsSliderOption"
-          typeItem="reviewsItem"
-        ></TheSwiperPage>
-      </div>
-    </section>-->
-
-    <section class="st-section features">
-      <div class="container">
-        <UITheSectionTitle
-          :title="featuresTitle"
-          :subtitle="featuresSubtitle"
-        ></UITheSectionTitle>
-        <div class="features__row">
-          <TheItem v-for="item in featuresItems" :item="item"></TheItem>
-        </div>
-      </div>
-    </section>
+    </section>    
 
     <Projects />
 
@@ -254,27 +134,6 @@
       </div>
     </section>
 
-    <!--<section class="st-section slider">
-      <div class="container">
-        <UITheSectionTitle
-          :title="reviewsTitle"
-          :subtitle="reviewsSubtitle"
-        ></UITheSectionTitle>
-        <TheSwiperPage
-          :uniqueId="'reviews'"
-          :items="reviews"
-          :options="reviewsSliderOption"
-          typeItem="reviewsItem"
-        ></TheSwiperPage>
-      </div>
-    </section>-->
-
-    <!--section class="st-section slider">
-            <div class="container">
-                <UITheSectionTitle :title="reviewsTitle2" :subtitle="reviewsSubtitle2"></UITheSectionTitle>
-                <TheSwiperPage :items="reviews2" :options="reviewsSliderOption" typeItem="reviewsItem"></TheSwiperPage>
-            </div>
-        </section-->
     <FAQ />
 
     <section class="subscribe st-section">
@@ -282,8 +141,8 @@
         <div class="subscribe__wrap" ref="subscribeRef">
           <UITheSectionTitle
             :className="'section-title--center'"
-            :title="'Подписывайтесь на нас'"
-            :subtitle="'Узнавайте первыми о новых кейсах, решениях и спецпредложениях'"
+            :title="'Подпишитесь на нас в соцсетях'"
+            :subtitle="'Будьте в курсе всех новостей и акций. Узнавайте первыми о новых моделях и полезных статьях об электромобилях'"
           ></UITheSectionTitle>
           <div class="subscribe__social">
             <a href="https://rutube.ru/channel/71798736/">
@@ -296,14 +155,14 @@
               >
                 <path
                   d="M633.019 123.532H25V779.556H194.229V566.129H518.504L666.46 779.556H855.952L692.803 565.146C743.475 557.28 779.953 538.589 802.248 509.085C824.538 479.58 835.689 432.367 835.689 369.422V320.244C835.689 282.868 831.64 253.363 824.544 230.742C817.447 208.121 805.286 188.447 788.06 170.745C769.818 154.024 749.555 142.223 725.233 134.357C700.911 127.473 670.508 123.532 633.019 123.532ZM605.659 421.553H194.229V268.113H605.659C628.96 268.113 645.175 272.043 653.282 278.932C661.39 285.815 666.46 298.6 666.46 317.291V372.37C666.46 392.038 661.39 404.822 653.282 411.705C645.175 418.589 628.966 421.542 605.659 421.542V421.553Z"
-                  stroke="#FF8900"
+                  stroke="#66cb01"
                   stroke-width="50"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 />
                 <path
                   d="M821.866 16C844.02 16.0001 862 33.9719 862 56.1455C862 78.3192 844.02 96.2919 821.866 96.292C799.684 96.292 781.708 78.3151 781.708 56.1455C781.709 33.976 799.684 16 821.866 16Z"
-                  stroke="#FF8900"
+                  stroke="#66cb01"
                   stroke-width="32"
                 />
               </svg>
@@ -320,7 +179,7 @@
                 <g clip-path="url(#clip0_3202_754)">
                   <path
                     d="M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32Z"
-                    fill="#ff8900"
+                    fill="#66cb01"
                   ></path>
                   <path
                     fill-rule="evenodd"
@@ -347,7 +206,7 @@
               >
                 <path
                   d="M325.65 325.65C282.75 369.915 279.63 425.1 275.925 546C388.635 546 466.44 545.61 506.61 506.61C545.61 466.44 546 384.93 546 275.925C425.1 279.825 369.915 282.75 325.65 325.65ZM0 275.925C0 384.93 0.39 466.44 39.39 506.61C79.56 545.61 157.365 546 270.075 546C266.175 425.1 263.25 369.915 220.35 325.65C176.085 282.75 120.9 279.63 0 275.925ZM270.075 0C157.56 0 79.56 0.39 39.39 39.39C0.39 79.56 0 161.07 0 270.075C120.9 266.175 176.085 263.25 220.35 220.35C263.25 176.085 266.37 120.9 270.075 0ZM325.65 220.35C282.75 176.085 279.63 120.9 275.925 0C388.635 0 466.44 0.39 506.61 39.39C545.61 79.56 546 161.07 546 270.075C425.1 266.175 369.915 263.25 325.65 220.35Z"
-                  fill="#FF8900"
+                  fill="#66cb01"
                 />
                 <path
                   d="M546 275.925V270.075C425.1 266.175 369.915 263.25 325.65 220.35C282.75 176.085 279.63 120.9 275.925 0H270.075C266.175 120.9 263.25 176.085 220.35 220.35C176.085 263.25 120.9 266.37 0 270.075V275.925C120.9 279.825 176.085 282.75 220.35 325.65C263.25 369.915 266.37 425.1 270.075 546H275.925C279.825 425.1 282.75 369.915 325.65 325.65C369.915 282.75 425.1 279.63 546 275.925Z"
@@ -377,67 +236,98 @@ import FAQ from "~/components/blocks/FAQ.vue";
 import Projects from "~/components/blocks/Projects.vue";
 
 useHead({
-  title: "Vlada Group — рентал и площадка для мероприятий и съемок в Москве",
+  title: "Установим зарядную станцию под ключ | Установка и монтаж зарядных станций в Москве",
   meta: [
     {
       name: "keywords",
       content:
-        "рентал в москве, кинорентал в москве, аренда кино оборудования в Москве",
+        "зарядные станции для электромобилей, установка зарядной станции, монтаж ЭЗС Москва, зарядка электромобиля под ключ",
     },
     {
       name: "description",
       content:
-        "Мы создали для вас инфраструктуру, чтобы создавать контента первоклассного уровня",
+        "Подберем и установим зарядную станцию под ключ с гарантией до 6 лет. Полный цикл услуг, цены ниже на 30%, монтаж в день обращения. Работаем по всей России.",
     },
     {
       property: "og:title",
       content:
-        "Vlada Group — рентал и площадка для мероприятий и съемок в Москве",
+        "Установим зарядную станцию под ключ | Установка и монтаж зарядных станций в Москве",
     },
     {
       property: "og:description",
       content:
-        "Мы создали для вас инфраструктуру, чтобы создавать контента первоклассного уровня",
+        "Подберем и установим зарядную станцию под ключ с гарантией до 6 лет. Полный цикл услуг, цены ниже на 30%, монтаж в день обращения.",
     },
-    { property: "og:image", content: "/images/main-1.jpg" },
+    { property: "og:image", content: "/images/main-promo.webp" },
   ],
 });
 
-const rentTitle = "Аренда оборудования и пространства";
-const rentSubtitle =
-  "Мы — единственная компания в стране, у которой в аренде есть камеры ведущих мировых брендов ARRI, RED, SONY с полным набором кинообъективов Signature Prime, Cooke, Master Prime, анаморфотных, макро и зум-объективов. А также мощный профессиональный свет и уникальные LED-экраны с разрешением до 8K для съемок с эффектами дополненной реальности, что позволяет создавать проекты любого уровня и масштаба. Вы можете протестировать оборудование прямо у нас на площадке, а мы поможем с подбором оптимального набора для вашего проекта.";
+const advantagesTitle = "Наши преимущества";
+const advantagesSubtitle =
+  "Полный цикл услуг, собственное производство и импорт. Работаем по всей России.";
 
-const rentItems = [
+const advantagesItems = [
   {
     id: 1,
-    title: "LED-экраны",
-    text: "Виртуальный продакшн для вашего проекта",
-    image: "/images/services/led.jpg",
-    link: "https://vladagroup-led.ru",
-    target: "_blank",
+    title: "Опыт более 10 лет",
+    text: "Проектируем и устанавливаем зарядную инфраструктуру для бизнеса и частных клиентов",
+    image: "/images/features/features1.jpg",
+    link: "#",
+    target: "_self",
   },
   {
     id: 2,
-    title: "Свет",
-    text: "Весь спект осветительного оборудования",
-    image: "/images/services/apst.jpg",
-    link: "/category/light",
+    title: "Гибкие условия",
+    text: "Цены ниже на 30%, монтаж в день обращения, гарантия до 6 лет",
+    image: "/images/features/features2.jpg",
+    link: "#",
     target: "_self",
   },
   {
     id: 3,
-    title: "Камеры и оптика",
-    text: "Arri, Red, Sony, объективы, мониторы и т.п.",
+    title: "Качественное обслуживание",
+    text: "Консультации 9:00–21:00, согласование с УК/ТСЖ, собственный сервис-центр",
+    image: "/images/features/features3.jpg",
+    link: "#",
+    target: "_self",
+  },
+];
+
+const serviceTitle = "Сервис";
+const serviceSubtitle =
+  "От проектирования и поставки до монтажа, настройки и обслуживания зарядных станций.";
+
+const serviceItems = [
+  {
+    id: 1,
+    title: "Монтаж оборудования",
+    text: "Установка зарядных станций на объекте с подключением и пусконаладкой",
+    image: "/images/services/led.jpg",
+    link: "/catalog",
+    target: "_self",
+  },
+  {
+    id: 2,
+    title: "Настройка и ввод в эксплуатацию",
+    text: "Подключение к платформам, настройка доступа и учёта",
+    image: "/images/services/apst.jpg",
+    link: "/catalog",
+    target: "_self",
+  },
+  {
+    id: 3,
+    title: "Техническое обслуживание",
+    text: "Регулярное ТО, диагностика, ремонт в собственном сервис-центре",
     image: "/images/services/cameras.jpg",
-    link: "/category/cameras",
+    link: "/catalog",
     target: "_self",
   },
   {
     id: 4,
-    title: "Пространство для съемок",
-    text: "Оборудованное под самые разные задачи",
+    title: "Замена вышедшего из строя",
+    text: "Подменное оборудование на время ремонта, обмен и возврат 365 дней",
     image: "/images/services/place.jpg",
-    link: "/pavilion",
+    link: "/catalog",
     target: "_self",
   },
 ];
@@ -735,32 +625,32 @@ const brandsSliderOption = {
   },
 };
 
-const featuresTitle = "Ваши преимущества";
+const featuresTitle = "Почему выбирают нас";
 const featuresSubtitle =
-  "Мы сделали для вас удобный сервис, чтобы вы могли создавать по-настоящему крутой контент";
+  "Полный цикл услуг, собственное производство и импорт. Работаем без посредников по всей России.";
 const featuresItems = [
   {
     id: 1,
-    title: "Кинорентал",
-    text: "Всё необходимое оборудование для съемок кино, рекламы и клипов",
+    title: "Цены ниже на 30%",
+    text: "Прямые поставки и собственное производство оборудования",
     image: "/images/features/features1.jpg",
   },
   {
     id: 2,
-    title: "Пространство для съемок",
-    text: "Компактное, просторное и функциональное",
+    title: "Монтаж в день обращения",
+    text: "Быстрый выезд, замер, проект и установка под ключ",
     image: "/images/features/features2.jpg",
   },
   {
     id: 3,
-    title: "Доступные тарифы",
-    text: "Гибкая система скидок",
+    title: "Гарантия до 6 лет",
+    text: "Собственный сервис-центр, обмен и возврат 365 дней",
     image: "/images/features/features3.jpg",
   },
   {
     id: 4,
-    title: "Привезем на проект",
-    text: "Есть собственный транспорт",
+    title: "Поддержка 9:00–21:00",
+    text: "Консультации и помощь с согласованием документации",
     image: "/images/features/features4.jpg",
   },
 ];

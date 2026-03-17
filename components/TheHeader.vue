@@ -6,19 +6,31 @@
           <a href="/">
             <img
               src="/images/logo.png"
-              alt="Влад Групп — рентал и пространство для съемок"
+              alt="Установка зарядных станций для электромобилей под ключ"
             />
           </a>
         </div>
 
-        <div class="header__right">
+        <div class="header__center">
+          <nav class="header__menu">
+            <ul>
+              <li><NuxtLink to="#">Зарядные станции</NuxtLink></li>
+              <li><NuxtLink to="#">Для бизнеса</NuxtLink></li>
+              <li><NuxtLink to="#">Для себя</NuxtLink></li>
+            </ul>
+          </nav>
+
           <div class="header__btn">
             <UITheButton
               :title="'Связаться'"
-              :class-name="'btn-secondary'"
+              :class-name="'btn-primary'"
               @click="openPopup"
             />
           </div>
+        </div>
+
+
+        <div class="header__right">          
           <div
             :class="['header__burger', { 'is-active': isShowMobileMenu }]"
             @click="toggleMobileMenu"
@@ -34,9 +46,9 @@
         >
           <ul>
             <li><a href="/about">О компании</a></li>
-            <li><a href="/catalog">Оборудование</a></li>
-            <li><a href="/pavilion">Площадка для съемок</a></li>
-            <li><a href="/event">Площадка для мероприятий</a></li>
+            <li><a href="/catalog">Каталог</a></li>
+            <li><a href="/pavilion">Услуги</a></li>
+            <li><a href="/event">Решения</a></li>
             <li><a href="/privacy">Политика конфиденциальности</a></li>
             <li><a href="/contacts">Контакты</a></li>
           </ul>

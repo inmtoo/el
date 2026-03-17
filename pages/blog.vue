@@ -12,7 +12,7 @@
                   <div class="blog__item-title">{{ item.title }}</div>
                   <div class="blog__item-text">{{ item.text }}</div>
                   <div class="blog__item-btn">
-                    <button class="btn btn-secondary">Подробнее</button>
+                    <button class="btn btn-primary">Подробнее</button>
                   </div>
                 </div>
               </div>

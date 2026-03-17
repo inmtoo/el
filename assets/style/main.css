@@ -20,7 +20,7 @@
   --headTextColor: #070D38;
   --textColor: #000;
   --bgLight: #F7F7F7;
-  --orangeColor: #ff8900;
+  --orangeColor: #66cb01;
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -464,7 +464,7 @@ body {
   font-family: var(--ffFiraSans);
   color: var(--textColor);
   font-size: 56px;
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 24px;
 }
 .main-slider__item-text {
@@ -635,7 +635,7 @@ body {
   max-width: 600px;
   font-family: var(--ffFiraSans);
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--textColor);
   line-height: 120%;
   padding-top: 6px;
@@ -644,7 +644,7 @@ body {
   font-family: var(--ffFiraSans);
   color: var(--textColor);
   font-size: 56px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 100%;
   margin-bottom: 32px;
 }
@@ -747,7 +747,7 @@ body {
 .restaurant-menu__item-name {
   color: var(--textColor);
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 120%;
   margin-bottom: 2px;
 }
@@ -773,7 +773,7 @@ body {
 .restaurant-menu__item-price {
   font-family: var(--ffFiraSans);
   color: var(--textColor);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 20px;
   margin-right: 20px;
 }
@@ -796,7 +796,7 @@ body {
   border-radius: 50%;
   background-color: var(--mainColor);
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   font-family: var(--ffFiraSans);
   color: var(--textColor);
   display: flex;
@@ -907,7 +907,7 @@ body {
 .item__price {
   font-family: var(--ffFiraSans);
   color: var(--textColor);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.25rem;
   margin-right: 1.25rem;
 }
@@ -931,7 +931,7 @@ body {
   background-color: var(--mainColor);
   font-size: 1.25rem;
   padding-bottom: 3px;
-  font-weight: 600;
+  font-weight: 500;
   font-family: var(--ffFiraSans);
   color: #fff;
   display: flex;
@@ -1116,7 +1116,7 @@ body {
 .reviews-item__price {
   font-family: var(--ffFiraSans);
   color: var(--textColor);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 20px;
   margin-right: 20px;
 }
@@ -1140,7 +1140,7 @@ body {
   background-color: var(--mainColor);
   font-size: 20px;
   padding-bottom: 3px;
-  font-weight: 600;
+  font-weight: 500;
   font-family: var(--ffFiraSans);
   color: #fff;
   display: flex;
@@ -1375,7 +1375,7 @@ body {
 .contacts h2 {
   color: var(--textColor);
   font-size: 56px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 100%;
   margin-bottom: 32px;
 }
@@ -1427,7 +1427,7 @@ body {
   align-items: center;
   font-size: 20px;
   line-height: 123%;
-  font-weight: 600;
+  font-weight: 500;
   font-family: var(--ffFiraSans);
   color: var(--textColor);
 }
@@ -1837,7 +1837,7 @@ body {
   font-size: 1.25rem;
   color: var(--textColor);
   line-height: 140%;
-  font-weight: 600;
+  font-weight: 500;
   margin-bottom: 2rem;
 }
 .product__info-compound span {
@@ -1863,7 +1863,7 @@ body {
   border-radius: 50%;
   background-color: var(--mainColor);
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: 500;
   font-family: var(--ffFiraSans);
   color: #fff;
   padding-bottom: 0.125rem;
@@ -1881,7 +1881,7 @@ body {
 .product__info-price {
   font-family: var(--ffFiraSans);
   font-size: 40px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--textColor);
 }
 .product__info button {

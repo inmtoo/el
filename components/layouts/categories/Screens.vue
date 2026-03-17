@@ -168,7 +168,7 @@ onMounted(() => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill="#ff8900"
+              fill="#66cb01"
               viewBox="-7 0 32 32"
               version="1.1"
             >
@@ -216,7 +216,7 @@ onMounted(() => {
 
           <UITheButtonLink
             title="Больше об экранах"
-            :className="'btn-secondary'"
+            :className="'btn-primary'"
             link="https:\/\/vladagroup-led.ru"
           ></UITheButtonLink>
         </div>

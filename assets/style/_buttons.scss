@@ -6,9 +6,9 @@
   justify-content: center;
   gap: .5rem;
   padding: 1.125rem 2.375rem;
-  font-family: var(--ffFiraSans);
+  font-family: var(--ffMontserrat);
   font-size: 1.25rem;
-  font-weight: 300;
+  font-weight: 400;
   border-radius: 10px;
   border: solid 0.125rem var(--mainColor);
   color: #fff;
@@ -34,30 +34,20 @@
     }
   }
 
-  &-primary {
-    background-color: var(--mainColor);
-
-    &:hover {
-      background-color: transparent;
-      color: var(--mainColor);
-
-      svg {
-        fill: var(--mainColor);
-      }
-    }
-  }
-
+  &-primary,
   &-secondary {
-    background-color: var(--orangeColor);
+    background: linear-gradient(90deg, #66CB01 0%, #1E95D5 50%, #1E95D5 50%, #66CB01 100%);
+    background-size: 200% 100%;
+    background-position: 0 0;
     color: #fff;
-    border-color: var(--orangeColor);
+    border: 0;
+    transition: background-position 0.4s ease;
 
     &:hover {
-      background-color: transparent;
-      color: var(--orangeColor);
+      background-position: 100% 0;
 
       svg {
-        fill: var(--orangeColor);
+        fill: #fff;
       }
     }
   }

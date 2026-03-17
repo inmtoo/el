@@ -16,7 +16,7 @@
 
             <UITheButton
               title="Познакомиться ближе"
-              :className="'btn-secondary'"
+              :className="'btn-primary'"
               @click="scrollToElem('.footer')"
             ></UITheButton>
           </div>

@@ -19,11 +19,11 @@ const projects = await getProjects();
 </script>
 
 <template>
-    <section class="st-section slider">
+    <section id="portfolio" class="st-section slider">
         <div class="container">
             <UITheSectionTitle
-                    title="Наши проекты"
-                    subtitle="Создатель VLADAGROUP — Влада Озолина. Ее профессиональный путь в кино- и рекламной индустрии насчитывает десятки лет: за 25 лет она и ее команда реализовали более 500 проектов, сотрудничали с известными режиссерами и продюсерскими центрами, предоставляя профессиональную технику премиум-класса для съемок и обеспечивая высокий уровень сервиса на площадке. "
+                    title="Портфолио"
+                    subtitle="Установка зарядных станций по всей России: паркинги, ТЦ, отели, АЗС, частные объекты. Проектирование, монтаж и пусконаладка под ключ. "
             ></UITheSectionTitle>
             <TheSwiperPage
                     :uniqueId="'reviews'"

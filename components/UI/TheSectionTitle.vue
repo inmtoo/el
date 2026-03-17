@@ -10,7 +10,7 @@
     <div class="section-title__btn">
       <UITheButton 
         v-if="video !== ''" 
-        :className="'btn-secondary btn-isvideo'"
+        :className="'btn-primary btn-isvideo'"
         title="Смотреть про экраны" 
         :isVideo="video !== ''"
         @click="showVideo">
