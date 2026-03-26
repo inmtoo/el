@@ -2,45 +2,12 @@
 import { ref } from "vue";
 import FormWrapper from "~/components/blocks/FormWrapper.vue";
 
+const props = defineProps<{
+  faq: Array<Record<string, any>>;
+}>();
+
 const faqRef = ref<HTMLElement | null>(null);
-const faq = [
-  {
-    id: 1,
-    question: "Текст вопроса",
-    answer:
-      "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>",
-  },
-  {
-    id: 2,
-    question: "Текст вопроса",
-    answer:
-      "<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
-  },
-  {
-    id: 3,
-    question: "Текст вопроса",
-    answer:
-      "<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>",
-  },
-  {
-    id: 4,
-    question: "Текст вопроса",
-    answer:
-      "<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.</p>",
-  },
-  {
-    id: 5,
-    question: "Текст вопроса",
-    answer:
-      "<p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa.</p>",
-  },
-  {
-    id: 6,
-    question: "Текст вопроса",
-    answer:
-      "<p>Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est.</p>",
-  },
-];
+
 const faqShowIndex = ref<number | null>(null);
 
 function faqShow(index: number) {
@@ -51,7 +18,8 @@ function faqShow(index: number) {
 onMounted(() => {
   const { $gsap } = useNuxtApp();
 
-  $gsap.utils.toArray(".faq__item").forEach((item) => {
+  const faqItems = $gsap.utils.toArray(".faq__item") as Element[];
+  faqItems.forEach((item) => {
     $gsap.set(item, { scale: 0.8, opacity: 0.9 });
 
     $gsap.to(item, {

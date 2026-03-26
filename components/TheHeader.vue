@@ -14,9 +14,9 @@
         <div class="header__center">
           <nav class="header__menu">
             <ul>
-              <li><NuxtLink to="#">Зарядные станции</NuxtLink></li>
-              <li><NuxtLink to="#">Для бизнеса</NuxtLink></li>
-              <li><NuxtLink to="#">Для себя</NuxtLink></li>
+              <li><NuxtLink to="/catalog">Зарядные станции</NuxtLink></li>
+              <li><NuxtLink to="/business">Для бизнеса</NuxtLink></li>
+              <li><NuxtLink to="/clients">Для себя</NuxtLink></li>
             </ul>
           </nav>
 
@@ -47,8 +47,8 @@
           <ul>
             <li><a href="/about">О компании</a></li>
             <li><a href="/catalog">Каталог</a></li>
-            <li><a href="/pavilion">Услуги</a></li>
-            <li><a href="/event">Решения</a></li>
+            <!-- <li><a href="/pavilion">Услуги</a></li> -->
+            <!-- <li><a href="/event">Решения</a></li> -->
             <li><a href="/privacy">Политика конфиденциальности</a></li>
             <li><a href="/contacts">Контакты</a></li>
           </ul>

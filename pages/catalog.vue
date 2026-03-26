@@ -47,8 +47,30 @@
       <div class="container">
         <UITheSectionTitle
           title="Каталог зарядных станций"
-          subtitle="Подберите зарядную станцию под ваш электромобиль и сценарий использования: дом, паркинг, офис, ТЦ, отель или АЗС."
+          subtitle="Выбор для Вас. Каталог электрозарядных станций для дома, паркингов, ТЦ, отелей и АЗС."
         />
+
+        <div class="catalog-powers">
+          <button
+            type="button"
+            class="catalog-powers__item"
+            :class="{ active: selectedPower === '' }"
+            @click="onSelectPower('')"
+          >
+            Все
+          </button>
+          <button
+            v-for="power in powers"
+            :key="power.slug || power.id"
+            type="button"
+            class="catalog-powers__item"
+            :class="{ active: selectedPower === power.slug }"
+            @click="onSelectPower(power.slug)"
+          >
+            {{ power.name }}
+          </button>
+        </div>
+        
         <div class="features__row">
           <TheItem
             v-for="(item, index) in catalogItems"
@@ -62,7 +84,7 @@
       </div>
     </section>
 
-    <FAQ />
+    <FAQ :faq="faq"  />
 
     <section class="subscribe st-section">
       <div class="container">
@@ -159,7 +181,10 @@
 import { ref, onMounted } from "vue";
 import FAQ from "~/components/blocks/FAQ.vue";
 import Pagination from "~/components/partials/Pagination.vue";
+import { useRoute } from "vue-router";
 import { useModal } from "~/composables/useModal";
+import { getPowers } from "~/api/powers";
+import { getProducts } from "~/api/products";
 
 useHead({
   title: "Каталог зарядных станций | Подбор и установка зарядки под ключ",
@@ -190,85 +215,95 @@ useHead({
 
 const isOpenPopup = useModal();
 
-const placeholderImg = "/images/main-promo.webp";
-
-const catalogItems = [
-  {
-    id: 1,
-    title: "MIRA",
-    text: "AC · 11–22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-  {
-    id: 2,
-    title: "MIRA 2",
-    text: "AC · 11–22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-  {
-    id: 3,
-    title: "MIRA 3",
-    text: "AC · 11–22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-  {
-    id: 4,
-    title: "Enel X",
-    text: "AC · 7,4–22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-  {
-    id: 5,
-    title: "MIRA",
-    text: "AC · 11–22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-  {
-    id: 6,
-    title: "MIRA 2",
-    text: "AC · 11–22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-  {
-    id: 7,
-    title: "MIRA 3",
-    text: "AC · 11–22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-  {
-    id: 8,
-    title: "Enel X",
-    text: "AC · 7,4–22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-];
+const catalogPlaceholderImg = "/images/main-promo.webp";
 
 const route = useRoute();
-const totalPages = 68;
+
+const totalPages = ref(1);
+const totalProducts = ref(0);
+
+function readPowerFromQuery(): string {
+  const p = route.query.power;
+  if (Array.isArray(p)) return String(p[0] ?? "");
+  return p ? String(p) : "";
+}
+const selectedPower = ref(readPowerFromQuery());
+
+const catalogItems = ref<Array<Record<string, any>>>([]);
+const powers = ref<Array<Record<string, any>>>([]);
+
+
+async function loadCatalogItems() {  
+  const page = Number(route.query.page) || 1;
+  const per_page = 8;
+  const power = selectedPower.value || "";
+
+  const data = await getProducts({
+    page,
+    per_page,
+    power: power || undefined,
+  });
+
+  const products = data?.products || [];
+  totalProducts.value = Math.max(0, Number(data?.total_items) || 0);
+  totalPages.value = Math.max(1, Number(data?.total_pages) || 1);
+
+  catalogItems.value = products.map((item: any) => {
+    const powerAttr = item.attributes?.find((attr: any) => attr.slug === "pa_moshhnost");
+    const powerName = powerAttr?.options?.map((option: any) => option.name).join(", ") ?? "";
+
+    return {
+      id: item.id,
+      title: item.name || item.title || "Зарядная станция",
+      text: powerName ? `Мощность: ${powerName}` : "",
+      image: item.image || catalogPlaceholderImg,
+      link: item.slug ? `/product/${item.slug}` : "/catalog",
+    };
+  });
+}
+
+powers.value = await getPowers();
+
+console.log("POWERS", powers.value);
+
+function getPowerValue(power: any): number {
+  const raw = String(power?.name ?? "");
+  const match = raw.match(/[\d.,]+/);
+  if (!match) return Number.MAX_SAFE_INTEGER;
+  return Number(match[0].replace(",", "."));
+}
+
+powers.value = [...powers.value].sort((a, b) => getPowerValue(a) - getPowerValue(b));
+
+async function onSelectPower(slug: string) {
+  selectedPower.value = slug;
+
+  const next: Record<string, string | string[]> = {
+    ...route.query,
+    page: "1",
+  };
+  if (slug) next.power = slug;
+  else delete next.power;
+
+  await navigateTo({ path: route.path, query: next });
+}
 
 const currentPage = ref(Number(route.query.page) || 1);
 
 watch(
-  () => route.query.page,
-  (q) => {
-    const p = Number(q) || 1;
+  () => [route.query.page, route.query.power],
+  async () => {
+    const p = Number(route.query.page) || 1;
     if (currentPage.value !== p) currentPage.value = p;
+    await loadCatalogItems();
   },
   { immediate: true }
 );
 
 watch(currentPage, (p) => {
   const q = Number(route.query.page) || 1;
-  if (p !== q && p >= 1 && p <= totalPages) {
-    navigateTo({ path: route.path, query: { ...route.query, page: p } });
+  if (p !== q && p >= 1 && p <= totalPages.value) {
+    navigateTo({ path: route.path, query: { ...route.query, page: String(p) } });
   }
 });
 
@@ -608,6 +643,81 @@ const featuresItems = [
   },
 ];
 
+const faq = [
+  {
+    id: 1,
+    question: "Какую зарядную станцию выбрать для дома или паркинга?",
+    answer:
+      "<p>В большинстве случаев подходит AC-станция (медленная зарядка). Она: дешевле проще в установке подходит для ежедневной зарядки По мощности: 3,5–7 кВт — если ограничена сеть 11–22 кВт — если есть достаточная мощность ( 22 кВт с переменного тока принимают только 5% электромобилей ) DC-станции для частного использования почти не применяются из-за высокой стоимости и требований.</p>",
+  },
+  {
+    id: 2,
+    question: "Какая мощность нужна для зарядки автомобиля?",
+    answer:
+      "<p>Мощность зависит от двух вещей: возможностей электросети возможностей автомобиля Важно: если автомобиль принимает 7 кВт — станция на 22 кВт быстрее его не зарядит. Поэтому сначала смотрят характеристики автомобиля, а потом подбирают станцию.</p>",
+  },
+  {
+    id: 3,
+    question: "Какие разъёмы нужны для зарядки?",
+    answer:
+      "<p>У каждого электромобиля свой тип разъёма, поэтому станция подбирается под конкретную модель. Встречаются: Type 2 CCS2 GB/T CCS1 CHAdeMO Главное правило: сначала определить разъём автомобиля — потом выбирать станцию. Если разъёмы не совпадают, можно использовать переходники, но это не всегда удобно для постоянного использования.</p>",
+  },
+  {
+    id: 4,
+    question: "Можно ли заряжать электромобиль от обычной розетки?",
+    answer:
+      "<p>Да, можно. Но это временное решение. Минусы: очень медленно нагрузка на проводку возможен перегрев Для регулярной зарядки лучше установить отдельную станцию.</p>",
+  },
+  {
+    id: 5,
+    question: "Можно ли установить зарядку в подземном паркинге?",
+    answer:
+      "<p>Да, можно, но с ограничениями. Что важно: прямого запрета нет ниже первого подземного уровня — только медленная зарядка требуется согласование с управляющей компанией На практике согласование может быть сложным, поэтому проект лучше прорабатывать заранее.</p>",
+  },
+  {
+    id: 6,
+    question: "Сколько стоит установка зарядной станции?",
+    answer:
+      "<p>Стоимость зависит от: выбранной станции длины кабеля сложности монтажа необходимости согласований Простая установка — дешевле. Если требуется прокладка кабеля и доработка сети — стоимость увеличивается.</p>",
+  },
+  {
+    id: 7,
+    question: "Нужно ли увеличивать мощность?",
+    answer:
+      "<p>Иногда — да. Это зависит от: текущей мощности выбранной станции общей нагрузки в доме Если мощности не хватает, можно: ограничить мощность станции использовать балансировку нагрузки увеличить выделенную мощность</p>",
+  },
+  {
+    id: 8,
+    question: "Что такое DLB и зачем она нужна?",
+    answer:
+      "<p>DLB (динамическая балансировка нагрузки) — это система, которая регулирует мощность зарядной станции в зависимости от нагрузки в сети. Проще: если в доме включены приборы, станция автоматически снижает мощность, чтобы не перегрузить сеть. Когда DLB нужна: ограниченная мощность квартира или паркинг несколько зарядных станций нет возможности увеличить мощность Что даёт: защита от перегрузки стабильная работа сети.</p>",
+  },
+  {
+    id: 9,
+    question: "Безопасна ли зарядка дома?",
+    answer:
+      "<p>Да, если всё сделано правильно. Обязательно: отдельная линия автомат защиты УЗО качественный монтаж Основной риск — не в станции, а в электропроводке.</p>",
+  },
+  {
+    id: 10,
+    question: "Сколько времени занимает зарядка?",
+    answer:
+      "<p>Примерно: от розетки — 10–20 часов от AC-станции — 3–8 часов на быстрых DC — 20–60 минут Для дома обычно достаточно ночной зарядки.</p>",
+  },
+  {
+    id: 11,
+    question: "Нужен ли интернет и приложение?",
+    answer:
+      "<p>Не обязательно. Станция может работать: без интернета без приложения Но дополнительные функции дают: управление через телефон контроль зарядки статистику</p>",
+  },
+  {
+    id: 12,
+    question: "Можно ли использовать одну станцию на несколько машин?",
+    answer:
+      "<p>Да. Варианты: заряжать по очереди установить несколько станций использовать распределение мощности установить зарядку с двумя пистолетами</p>",
+  },
+];
+
 const video = "https://rutube.ru/play/embed/1a6370b94c09a960043d6161694e143e/";
 const isShowVideo = ref(false);
 
@@ -647,6 +757,26 @@ const breadcrumbs = [
   { title: "Каталог зарядных станций", link: "" },
 ];
 
+// Вставляйте сюда нужный URL для ручной проверки лимита бэкенда.
+const testProductsUrl =
+  "https://zaryadki-el.ru/wp-json/public-api/v1/products?per_page=700&page=1&power=150";
+
+async function testProductsCount() {
+  try {
+    const res = await fetch(testProductsUrl);
+    const data = await res.json();
+    const products = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.products)
+      ? data.products
+      : [];
+
+    console.log("Products returned:", products.length);
+  } catch (error) {
+    console.error("Products count test failed:", error);
+  }
+}
+
 onMounted(() => {
   const { $gsap } = useNuxtApp();
 
@@ -665,48 +795,7 @@ onMounted(() => {
       fastScrollEnd: true,
     },
   });
+
+  testProductsCount();
 });
 </script>
-
-<style scoped lang="scss">
-$gradient: linear-gradient(90deg, #66CB01 0%, #1E95D5 50%, #1E95D5 50%, #66CB01 100%);
-
-.catalog-pagination {
-  margin-top: 2rem;
-  display: flex;
-  justify-content: flex-start;
-
-  :deep(.pagination) {
-    margin-top: 0;
-  }
-
-  :deep(.pagination__next) {
-    display: none;
-  }
-
-  :deep(.pagination__link a) {
-    width: 3rem;
-    height: 3rem;
-    min-width: 3rem;
-    padding: 0;
-    border-radius: 50%;
-    background-color: transparent;
-    color: #333;
-    transition: none;
-  }
-
-  :deep(.pagination__link.active a) {
-    background: $gradient;
-    background-size: 200% 100%;
-    background-position: 0 0;
-    color: #fff;
-  }
-
-  :deep(.pagination__link a:hover) {
-    background: $gradient;
-    background-size: 200% 100%;
-    background-position: 0 0;
-    color: #fff;
-  }
-}
-</style>

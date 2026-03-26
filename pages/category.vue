@@ -28,8 +28,6 @@
       v-model:page="page"
     />
 
-    <!--<FAQ />-->
-
     <section class="subscribe st-section">
       <div class="container">
         <div class="subscribe__wrap" ref="subscribeRef">
@@ -128,7 +126,6 @@
 <script setup lang="ts">
 import { getCategories, getCategoryBySlug } from "~/api/categories";
 import { getProducts } from "~/api/products";
-import FAQ from "~/components/blocks/FAQ.vue";
 import Screens from "~/components/layouts/categories/Screens.vue";
 import Catalog from "~/components/blocks/Catalog.vue";
 
@@ -189,7 +186,7 @@ const promises = [getData()];
 
 const breadcrumbs = [
   { title: "Главная", link: "/" },
-  { title: "Аренда съемочного оборудования", link: "/catalog" },
+  { title: "Каталог зарядных станций", link: "/catalog" },
 ];
 if (useRoute().params.slug) {
   promises.push(

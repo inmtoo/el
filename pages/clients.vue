@@ -23,18 +23,40 @@
     <section class="st-section features">
       <div class="container">
         <UITheSectionTitle
-          title="Самые популярные модели"
-          subtitle="Откройте для себя наши бестселлеры, которые выбирают миллионы"
+          title="Каталог зарядных станций"
+          subtitle="Выбор для Вас. Каталог электрозарядных станций для дома, паркингов, ТЦ, отелей и АЗС."
         />
+
+        <div class="catalog-powers">
+          <button
+            type="button"
+            class="catalog-powers__item"
+            :class="{ active: selectedPower === '' }"
+            @click="onSelectPower('')"
+          >
+            Все
+          </button>
+          <button
+            v-for="power in powers"
+            :key="power.slug || power.id"
+            type="button"
+            class="catalog-powers__item"
+            :class="{ active: selectedPower === power.slug }"
+            @click="onSelectPower(power.slug)"
+          >
+            {{ power.name }}
+          </button>
+        </div>
+
         <div class="features__row">
           <TheItem
-            v-for="(item, index) in popularModels"
+            v-for="(item, index) in catalogItems"
             :key="index"
             :item="item"
           />
         </div>
         <div class="rent-block__more">
-          <NuxtLink to="/catalog" class="rent-block__more-link btn btn-primary">Показать все</NuxtLink>
+          <NuxtLink :to="catalogAllLink" class="rent-block__more-link btn btn-primary">Показать все</NuxtLink>
         </div>
       </div>
     </section>
@@ -89,7 +111,7 @@
       </div>
     </section>
 
-    <FAQ />
+    <FAQ :faq="faq" />
 
     <section class="subscribe st-section">
       <div class="container">
@@ -178,67 +200,64 @@
 
 <script setup lang="ts">
 import FAQ from "~/components/blocks/FAQ.vue";
+import { getPowers } from "~/api/powers";
+import { getProducts } from "~/api/products";
 
 const placeholderImg = "/images/main-promo.webp";
 
-const popularModels = [
-  {
-    id: 1,
-    title: "MIRA",
-    text: "Мощность: 11-22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-  {
-    id: 2,
-    title: "MIRA 2",
-    text: "Мощность: 11-22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-  {
-    id: 3,
-    title: "MIRA 3",
-    text: "Мощность: 11-22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-  {
-    id: 4,
-    title: "Enel X",
-    text: "Мощность: 7,4-22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-  {
-    id: 5,
-    title: "MIRA",
-    text: "Мощность: 11-22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-  {
-    id: 6,
-    title: "MIRA 2",
-    text: "Мощность: 11-22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-  {
-    id: 7,
-    title: "MIRA 3",
-    text: "Мощность: 11-22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-  {
-    id: 8,
-    title: "Enel X",
-    text: "Мощность: 7,4-22 кВт",
-    image: placeholderImg,
-    link: "/catalog",
-  },
-];
+const selectedPower = ref("");
+const catalogItems = ref<Array<Record<string, any>>>([]);
+const powers = ref<Array<Record<string, any>>>([]);
+
+const catalogAllLink = computed(() => {
+  const slug = selectedPower.value;
+  if (slug) {
+    return { path: "/catalog", query: { power: slug } };
+  }
+
+  return "/catalog";
+});
+
+async function loadCatalogItems() {
+  const data = await getProducts({
+    page: 1,
+    per_page: 8,
+    power: selectedPower.value || undefined,
+  });
+
+  const products = data?.products || [];
+
+  catalogItems.value = products.map((item: any) => {
+    const powerAttr = item.attributes?.find((attr: any) => attr.slug === "pa_moshhnost");
+    const powerName = powerAttr?.options?.map((option: any) => option.name).join(", ") ?? "";
+
+    return {
+      id: item.id,
+      title: item.name || item.title || "Зарядная станция",
+      text: powerName ? `Мощность: ${powerName}` : "",
+      image: item.image || placeholderImg,
+      link: item.slug ? `/product/${item.slug}` : "/catalog",
+    };
+  });
+}
+
+powers.value = await getPowers();
+
+function getPowerValue(power: any): number {
+  const raw = String(power?.name ?? "");
+  const match = raw.match(/[\d.,]+/);
+  if (!match) return Number.MAX_SAFE_INTEGER;
+  return Number(match[0].replace(",", "."));
+}
+
+powers.value = [...powers.value].sort((a, b) => getPowerValue(a) - getPowerValue(b));
+
+await loadCatalogItems();
+
+async function onSelectPower(slug: string) {
+  selectedPower.value = slug;
+  await loadCatalogItems();
+}
 
 const advantagesItems = [
   {
@@ -292,6 +311,81 @@ const serviceItems = [
     text: "",
     image: placeholderImg,
     link: "#",
+  },
+];
+
+const faq = [
+  {
+    id: 1,
+    question: "Какую зарядную станцию выбрать для дома или паркинга?",
+    answer:
+      "<p>В большинстве случаев подходит AC-станция (медленная зарядка). Она: дешевле проще в установке подходит для ежедневной зарядки По мощности: 3,5–7 кВт — если ограничена сеть 11–22 кВт — если есть достаточная мощность ( 22 кВт с переменного тока принимают только 5% электромобилей ) DC-станции для частного использования почти не применяются из-за высокой стоимости и требований.</p>",
+  },
+  {
+    id: 2,
+    question: "Какая мощность нужна для зарядки автомобиля?",
+    answer:
+      "<p>Мощность зависит от двух вещей: возможностей электросети возможностей автомобиля Важно: если автомобиль принимает 7 кВт — станция на 22 кВт быстрее его не зарядит. Поэтому сначала смотрят характеристики автомобиля, а потом подбирают станцию.</p>",
+  },
+  {
+    id: 3,
+    question: "Какие разъёмы нужны для зарядки?",
+    answer:
+      "<p>У каждого электромобиля свой тип разъёма, поэтому станция подбирается под конкретную модель. Встречаются: Type 2 CCS2 GB/T CCS1 CHAdeMO Главное правило: сначала определить разъём автомобиля — потом выбирать станцию. Если разъёмы не совпадают, можно использовать переходники, но это не всегда удобно для постоянного использования.</p>",
+  },
+  {
+    id: 4,
+    question: "Можно ли заряжать электромобиль от обычной розетки?",
+    answer:
+      "<p>Да, можно. Но это временное решение. Минусы: очень медленно нагрузка на проводку возможен перегрев Для регулярной зарядки лучше установить отдельную станцию.</p>",
+  },
+  {
+    id: 5,
+    question: "Можно ли установить зарядку в подземном паркинге?",
+    answer:
+      "<p>Да, можно, но с ограничениями. Что важно: прямого запрета нет ниже первого подземного уровня — только медленная зарядка требуется согласование с управляющей компанией На практике согласование может быть сложным, поэтому проект лучше прорабатывать заранее.</p>",
+  },
+  {
+    id: 6,
+    question: "Сколько стоит установка зарядной станции?",
+    answer:
+      "<p>Стоимость зависит от: выбранной станции длины кабеля сложности монтажа необходимости согласований Простая установка — дешевле. Если требуется прокладка кабеля и доработка сети — стоимость увеличивается.</p>",
+  },
+  {
+    id: 7,
+    question: "Нужно ли увеличивать мощность?",
+    answer:
+      "<p>Иногда — да. Это зависит от: текущей мощности выбранной станции общей нагрузки в доме Если мощности не хватает, можно: ограничить мощность станции использовать балансировку нагрузки увеличить выделенную мощность</p>",
+  },
+  {
+    id: 8,
+    question: "Что такое DLB и зачем она нужна?",
+    answer:
+      "<p>DLB (динамическая балансировка нагрузки) — это система, которая регулирует мощность зарядной станции в зависимости от нагрузки в сети. Проще: если в доме включены приборы, станция автоматически снижает мощность, чтобы не перегрузить сеть. Когда DLB нужна: ограниченная мощность квартира или паркинг несколько зарядных станций нет возможности увеличить мощность Что даёт: защита от перегрузки стабильная работа сети.</p>",
+  },
+  {
+    id: 9,
+    question: "Безопасна ли зарядка дома?",
+    answer:
+      "<p>Да, если всё сделано правильно. Обязательно: отдельная линия автомат защиты УЗО качественный монтаж Основной риск — не в станции, а в электропроводке.</p>",
+  },
+  {
+    id: 10,
+    question: "Сколько времени занимает зарядка?",
+    answer:
+      "<p>Примерно: от розетки — 10–20 часов от AC-станции — 3–8 часов на быстрых DC — 20–60 минут Для дома обычно достаточно ночной зарядки.</p>",
+  },
+  {
+    id: 11,
+    question: "Нужен ли интернет и приложение?",
+    answer:
+      "<p>Не обязательно. Станция может работать: без интернета без приложения Но дополнительные функции дают: управление через телефон контроль зарядки статистику</p>",
+  },
+  {
+    id: 12,
+    question: "Можно ли использовать одну станцию на несколько машин?",
+    answer:
+      "<p>Да. Варианты: заряжать по очереди установить несколько станций использовать распределение мощности установить зарядку с двумя пистолетами</p>",
   },
 ];
 

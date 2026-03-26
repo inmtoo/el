@@ -23,9 +23,29 @@
     <section class="st-section features">
       <div class="container">
         <UITheSectionTitle
-          title="Каталог продукции"
-          subtitle="Зарядные станции для паркингов, ТЦ, отелей и АЗС. AC и DC, от 7 до 150 кВт. Подбор под ваши задачи и бюджет."
+          title="Каталог зарядных станций"
+          subtitle="Выбор для Вас. Каталог электрозарядных станций для дома, паркингов, ТЦ, отелей и АЗС."
         />
+        <div class="catalog-powers">
+          <button
+            type="button"
+            class="catalog-powers__item"
+            :class="{ active: selectedPower === '' }"
+            @click="onSelectPower('')"
+          >
+            Все
+          </button>
+          <button
+            v-for="power in powers"
+            :key="power.slug || power.id"
+            type="button"
+            class="catalog-powers__item"
+            :class="{ active: selectedPower === power.slug }"
+            @click="onSelectPower(power.slug)"
+          >
+            {{ power.name }}
+          </button>
+        </div>
         <div class="features__row">
           <TheItem
             v-for="(item, index) in catalogItems"
@@ -34,7 +54,7 @@
           />
         </div>
         <div class="rent-block__more">
-          <NuxtLink to="/catalog" class="rent-block__more-link btn btn-primary">Показать все</NuxtLink>
+          <NuxtLink :to="catalogAllLink" class="rent-block__more-link btn btn-primary">Показать все</NuxtLink>
         </div>
       </div>
     </section>
@@ -76,20 +96,20 @@
         <div class="info-block__row">
           <div class="info-block__text">
             <UITheSectionTitle
-              title="Отзывы экспертов"
-              subtitle="Внедрение зарядной инфраструктуры — это не только экология, но и дополнительная монетизация парковок, рост лояльности клиентов и соответствие трендам. Мы помогаем бизнесу делать осознанный шаг вперёд."
+              title="Текст от директора"
+              subtitle="Мы верим, что электрический транспорт - это будущее. И наша миссия - сделать его доступным и удобным для каждого. Наши зарядные станции — это не просто устройства, это ваш шаг в зелёное будущее."
               author="Иван Иванов"
-              position="CEO Company"
+              position="Директор компании"
             />
           </div>
           <div class="info-block__img">
-            <img src="/images/info-block.webp" alt="Отзывы экспертов" />
+            <img src="/images/info-block.webp" alt="Директор компании" />
           </div>
         </div>
       </div>
     </section>
 
-    <FAQ />
+    <FAQ :faq="faq" />
 
     <section class="subscribe st-section">
       <div class="container">
@@ -177,18 +197,65 @@
 </template>
 
 <script setup lang="ts">
+import FAQ from "~/components/blocks/FAQ.vue";
+import { getPowers } from "~/api/powers";
+import { getProducts } from "~/api/products";
+
 const placeholderImg = "/images/main-promo.webp";
 
-const catalogItems = [
-  { id: 1, title: "Модель 1", text: "Тип AC/DC · 50 kW", image: placeholderImg, link: "/catalog" },
-  { id: 2, title: "Модель 2", text: "Тип AC · 22 kW", image: placeholderImg, link: "/catalog" },
-  { id: 3, title: "Модель 3", text: "Тип DC · 150 kW", image: placeholderImg, link: "/catalog" },
-  { id: 4, title: "Модель 4", text: "Тип AC · 11 kW", image: placeholderImg, link: "/catalog" },
-  { id: 5, title: "Модель 5", text: "Тип AC/DC · 60 kW", image: placeholderImg, link: "/catalog" },
-  { id: 6, title: "Модель 6", text: "Тип AC · 7 кВт", image: placeholderImg, link: "/catalog" },
-  { id: 7, title: "Модель 7", text: "Тип DC · 120 kW", image: placeholderImg, link: "/catalog" },
-  { id: 8, title: "Модель 8", text: "Тип AC/DC · 22 kW", image: placeholderImg, link: "/catalog" },
-];
+const selectedPower = ref("");
+const catalogItems = ref<Array<Record<string, any>>>([]);
+const powers = ref<Array<Record<string, any>>>([]);
+
+const catalogAllLink = computed(() => {
+  const slug = selectedPower.value;
+  if (slug) {
+    return { path: "/catalog", query: { power: slug } };
+  }
+
+  return "/catalog";
+});
+
+async function loadCatalogItems() {
+  const data = await getProducts({
+    page: 1,
+    per_page: 8,
+    power: selectedPower.value || undefined,
+  });
+
+  const products = data?.products || [];
+
+  catalogItems.value = products.map((item: any) => {
+    const powerAttr = item.attributes?.find((attr: any) => attr.slug === "pa_moshhnost");
+    const powerName = powerAttr?.options?.map((option: any) => option.name).join(", ") ?? "";
+
+    return {
+      id: item.id,
+      title: item.name || item.title || "Зарядная станция",
+      text: powerName ? `Мощность: ${powerName}` : "",
+      image: item.image || placeholderImg,
+      link: item.slug ? `/product/${item.slug}` : "/catalog",
+    };
+  });
+}
+
+powers.value = await getPowers();
+
+function getPowerValue(power: any): number {
+  const raw = String(power?.name ?? "");
+  const match = raw.match(/[\d.,]+/);
+  if (!match) return Number.MAX_SAFE_INTEGER;
+  return Number(match[0].replace(",", "."));
+}
+
+powers.value = [...powers.value].sort((a, b) => getPowerValue(a) - getPowerValue(b));
+
+await loadCatalogItems();
+
+async function onSelectPower(slug: string) {
+  selectedPower.value = slug;
+  await loadCatalogItems();
+}
 
 const advantagesItems = [
   {
@@ -242,6 +309,75 @@ const projectItems = [
     text: "Торговый центр. Парковка с зарядной инфраструктурой. Проектирование и поставка под ключ.",
     image: placeholderImg,
     link: "#",
+  },
+];
+
+const faq = [
+  {
+    id: 1,
+    question: "Какую зарядную станцию выбрать для бизнеса: AC или DC?",
+    answer:
+      "<p>Выбор зависит от сценария использования. AC-станции (медленные) подходят для: офисов жилых комплексов отелей паркингов Автомобиль стоит долго, зарядка идёт постепенно. DC-станции (быстрые) подходят для: АЗС торговых центров трасс коммерческих площадок с потоком Если задача — зарабатывать на трафике, чаще выбирают DC. Если задача — сервис для клиентов или арендаторов, достаточно AC.</p>",
+  },
+  {
+    id: 2,
+    question: "Какие разъёмы бывают у зарядных станций?",
+    answer:
+      "<p>Для AC-станций чаще всего используется Type 2: в виде розетки или встроенного кабеля с коннектором Оба варианта применяются, выбор зависит от удобства и условий эксплуатации. Для DC-станций наиболее востребованы: CCS2 GB/T CHAdeMO реже CCS1 С учётом высокой доли китайских электромобилей на рынке, GB/T сегодня крайне востребован и во многих проектах обязателен. Оптимальные конфигурации: CCS2 + […]</p>",
+  },
+  {
+    id: 3,
+    question: "Сколько стоит установка зарядной станции под ключ?",
+    answer:
+      "<p>Стоимость зависит не только от оборудования. В итоговую цену входят: зарядная станция доставка монтаж кабельная линия автоматика и защита проектирование согласования пусконаладка AC-проекты могут быть относительно недорогими. DC-проекты — это уже серьёзные инвестиции, где ключевую роль играет стоимость подключения и инфраструктуры.</p>",
+  },
+  {
+    id: 4,
+    question: "Какая мощность нужна и хватит ли её на объекте?",
+    answer:
+      "<p>Это ключевой вопрос перед покупкой. Необходимо определить: есть ли свободная мощность откуда можно подключиться выдержит ли сеть одну или несколько станций требуется ли увеличение мощности Для AC это часто решается на существующих мощностях. Для DC — почти всегда требуется точный расчёт и проверка.</p>",
+  },
+  {
+    id: 5,
+    question: "Нужны ли согласования для установки?",
+    answer:
+      "<p>Да, в большинстве случаев. Сложность зависит от объекта: частная территория — проще ТЦ, БЦ, АЗС — средняя сложность жилые комплексы и паркинги — сложнее Могут потребоваться: согласование с УК или собственником проект согласование с сетевой организацией.</p>",
+  },
+  {
+    id: 6,
+    question: "Можно ли установить зарядную станцию в подземном паркинге?",
+    answer:
+      "<p>Да, можно, но с ограничениями. Прямого запрета нет. Важно: проверить возможность подключения, согласовать с УК или собственником, учесть особенности подземной инфраструктуры.</p>",
+  },
+  {
+    id: 7,
+    question: "Можно ли зарабатывать на зарядной станции и какая окупаемость?",
+    answer:
+      "<p>Да, можно, но это зависит от локации. На окупаемость влияют: поток автомобилей мощность станции тариф доступность и удобство конкуренция рядом Без трафика даже дорогая станция не окупается. При хорошей локации проект может быть прибыльным и масштабируемым.</p>",
+  },
+  {
+    id: 8,
+    question: "Можно ли подключить приложение, оплату и удалённое управление?",
+    answer:
+      "<p>Да. Современные станции поддерживают: оплату через приложение RFID-карты удалённый мониторинг управление тарифами статистику зарядных сессий Для коммерческих проектов используется протокол OCPP, который позволяет управлять станциями через сервер и масштабировать сеть.</p>",
+  },
+  {
+    id: 9,
+    question: "Какое обслуживание требуется после установки?",
+    answer:
+      "<p>После запуска станция требует: удалённого мониторинга технического обслуживания диагностики обновления ПО ремонта при необходимости Важно заранее определить, кто отвечает за обслуживание и в какие сроки устраняются неисправности.</p>",
+  },
+  {
+    id: 10,
+    question: "Сколько коннекторов может быть у DC-станции?",
+    answer:
+      "<p>DC-станции бывают: с 1 пистолетом с 2 пистолетами с 3 пистолетами с 4 пистолетами Выбор зависит от: потока автомобилей доступной мощности модели бизнеса Для небольших объектов достаточно 1–2 коннекторов. Для загруженных локаций используют многопостовые решения с распределением мощности.</p>",
+  },
+  {
+    id: 11,
+    question: "Можно ли начать с одной станции и потом масштабироваться?",
+    answer:
+      "<p>Да, это разумный подход. Сначала можно: протестировать локацию понять загрузку оценить экономику Дальше масштабировать проект. Важно заранее предусмотреть: запас по мощности место под новые станции совместимость оборудования и ПО.</p>",
   },
 ];
 
