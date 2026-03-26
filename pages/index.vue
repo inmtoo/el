@@ -6,8 +6,13 @@
           <div class="main-promo__left">
             <p>Зарядная инфраструктура</p>
             <h1>Зарядные станции для бизнеса и личного использования</h1>
-            <p class="main-promo__desc">Мы предлагаем станции для дома, бизнеса и автосервиса.</p>
-            <UITheButtonLink title="Подробнее" link="/catalog"></UITheButtonLink>
+            <p class="main-promo__desc">
+              Мы предлагаем станции для дома, бизнеса и автосервиса.
+            </p>
+            <UITheButtonLink
+              title="Подробнее"
+              link="/catalog"
+            ></UITheButtonLink>
           </div>
           <div
             :class="[
@@ -16,7 +21,7 @@
             ]"
           >
             <img
-              src="/images/main-promo.webp"
+              src="/images/main-promo.jpg"
               alt="Установка зарядных станций для электромобилей"
             />
 
@@ -69,7 +74,7 @@
             {{ power.name }}
           </button>
         </div>
-        
+
         <div class="features__row">
           <TheItem
             v-for="(item, index) in catalogItems"
@@ -78,7 +83,11 @@
           />
         </div>
         <div class="rent-block__more">
-          <NuxtLink :to="catalogAllLink" class="rent-block__more-link btn btn-primary">Показать все</NuxtLink>
+          <NuxtLink
+            :to="catalogAllLink"
+            class="rent-block__more-link btn btn-primary"
+            >Показать все</NuxtLink
+          >
         </div>
       </div>
     </section>
@@ -90,7 +99,11 @@
           :subtitle="advantagesSubtitle"
         ></UITheSectionTitle>
         <div class="features__row">
-          <TheItem v-for="item in advantagesItems" :item="item" :key="item.id"></TheItem>
+          <TheItem
+            v-for="item in advantagesItems"
+            :item="item"
+            :key="item.id"
+          ></TheItem>
         </div>
       </div>
     </section>
@@ -102,7 +115,11 @@
           :subtitle="serviceSubtitle"
         ></UITheSectionTitle>
         <div class="features__row">
-          <TheItem v-for="item in serviceItems" :item="item" :key="item.id"></TheItem>
+          <TheItem
+            v-for="item in serviceItems"
+            :item="item"
+            :key="item.id"
+          ></TheItem>
         </div>
       </div>
     </section>
@@ -112,14 +129,14 @@
         <div class="info-block__row">
           <div class="info-block__text">
             <UITheSectionTitle
-              title="Текст от директора"
-              subtitle="Мы верим, что электрический транспорт - это будущее. И наша миссия - сделать его доступным и удобным для каждого. Наши зарядные станции — это не просто устройства, это ваш шаг в зелёное будущее."
-              author="Иван Иванов"
+              title="Мы верим: будущее за электромобилями"
+              subtitle="Наша миссия — сделать зарядку доступной и удобной для каждого. Станции EL — это не просто оборудование, это ваш уверенный шаг в технологичный и чистый мир"
+              author="Юрий Светличный"
               position="Директор компании"
             />
           </div>
           <div class="info-block__img">
-            <img src="/images/info-block.webp" alt="Директор компании" />
+            <img src="/images/jur.jpg" alt="Юрий Светличный" />
           </div>
         </div>
       </div>
@@ -155,7 +172,7 @@
           typeItem="item"
         ></TheSwiperPage>
       </div>
-    </section>    
+    </section>
 
     <Projects />
 
@@ -176,7 +193,7 @@
 
     <FAQ :faq="faq" />
 
-    <section class="subscribe st-section">
+    <!--<section class="subscribe st-section">
       <div class="container">
         <div class="subscribe__wrap" ref="subscribeRef">
           <UITheSectionTitle
@@ -257,7 +274,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section>-->
   </main>
 
   <UIThePopupVideo
@@ -276,7 +293,8 @@ import FAQ from "~/components/blocks/FAQ.vue";
 import Projects from "~/components/blocks/Projects.vue";
 
 useHead({
-  title: "Установим зарядную станцию под ключ | Установка и монтаж зарядных станций в Москве",
+  title:
+    "Установим зарядную станцию под ключ | Установка и монтаж зарядных станций в Москве",
   meta: [
     {
       name: "keywords",
@@ -386,7 +404,7 @@ const advantagesItems = [
     id: 1,
     title: "Опыт более 10 лет",
     text: "Проектируем и устанавливаем зарядную инфраструктуру для бизнеса и частных клиентов",
-    image: "/images/features/features1.jpg",
+    image: "/images/features/10years.jpg",
     link: "#",
     target: "_self",
   },
@@ -394,7 +412,7 @@ const advantagesItems = [
     id: 2,
     title: "Гибкие условия",
     text: "Цены ниже на 30%, монтаж в день обращения, гарантия до 6 лет",
-    image: "/images/features/features2.jpg",
+    image: "/images/features/guarantee.jpg",
     link: "#",
     target: "_self",
   },
@@ -402,7 +420,7 @@ const advantagesItems = [
     id: 3,
     title: "Качественное обслуживание",
     text: "Консультации 9:00–21:00, согласование с УК/ТСЖ, собственный сервис-центр",
-    image: "/images/features/features3.jpg",
+    image: "/images/features/service.jpg",
     link: "#",
     target: "_self",
   },
@@ -417,7 +435,7 @@ const serviceItems = [
     id: 1,
     title: "Монтаж оборудования",
     text: "Установка зарядных станций на объекте с подключением и пусконаладкой",
-    image: "/images/services/led.jpg",
+    image: "/images/services/montazh.jpg",
     link: "/catalog",
     target: "_self",
   },
@@ -425,7 +443,7 @@ const serviceItems = [
     id: 2,
     title: "Настройка и ввод в эксплуатацию",
     text: "Подключение к платформам, настройка доступа и учёта",
-    image: "/images/services/apst.jpg",
+    image: "/images/services/vvod.jpg",
     link: "/catalog",
     target: "_self",
   },
@@ -433,7 +451,7 @@ const serviceItems = [
     id: 3,
     title: "Техническое обслуживание",
     text: "Регулярное ТО, диагностика, ремонт в собственном сервис-центре",
-    image: "/images/services/cameras.jpg",
+    image: "/images/services/to.jpg",
     link: "/catalog",
     target: "_self",
   },
@@ -441,7 +459,7 @@ const serviceItems = [
     id: 4,
     title: "Замена вышедшего из строя",
     text: "Подменное оборудование на время ремонта, обмен и возврат 365 дней",
-    image: "/images/services/place.jpg",
+    image: "/images/services/podmena.jpg",
     link: "/catalog",
     target: "_self",
   },
@@ -455,12 +473,12 @@ const powers = ref<Array<Record<string, any>>>([]);
 
 const catalogAllLink = computed(() => {
   const slug = selectedPower.value;
-  if(slug) {
+  if (slug) {
     return { path: "/catalog", query: { power: slug } };
   }
 
   return "/catalog";
-})
+});
 
 async function loadCatalogItems() {
   const data = await getProducts({
@@ -472,8 +490,11 @@ async function loadCatalogItems() {
   const products = data?.products || [];
 
   catalogItems.value = products.map((item: any) => {
-    const powerAttr = item.attributes?.find((attr: any) => attr.slug === "pa_moshhnost");
-    const powerName = powerAttr?.options?.map((option: any) => option.name).join(", ") ?? "";
+    const powerAttr = item.attributes?.find(
+      (attr: any) => attr.slug === "pa_moshhnost",
+    );
+    const powerName =
+      powerAttr?.options?.map((option: any) => option.name).join(", ") ?? "";
 
     return {
       id: item.id,
@@ -494,7 +515,9 @@ function getPowerValue(power: any): number {
   return Number(match[0].replace(",", "."));
 }
 
-powers.value = [...powers.value].sort((a, b) => getPowerValue(a) - getPowerValue(b));
+powers.value = [...powers.value].sort(
+  (a, b) => getPowerValue(a) - getPowerValue(b),
+);
 
 await loadCatalogItems();
 
@@ -502,100 +525,6 @@ async function onSelectPower(slug: string) {
   selectedPower.value = slug;
   await loadCatalogItems();
 }
-
-const solutionsTitle = "Пространство для съемок и мероприятий";
-const solutionsSubtitle =
-  "Оборудованная площадка с возможностью настройки под свои задачи";
-const solutionsItems = [
-  {
-    id: 1,
-    title: "Съемки кино",
-    text: "Трансформируйте компактный павильон под свои сцены. Камеры, свет, экраны уже на месте.",
-    image: "/images/space/cinema.jpg",
-  },
-  {
-    id: 2,
-    title: "Съемки рекламы",
-    text: "Просторный и оборудованный павильон для создания потрясающего визуала",
-    image: "/images/space/ad.jpg",
-  },
-  {
-    id: 3,
-    title: "Запись подкастов",
-    text: "Аренда небольших пространств для записи аудио и видео полкастов",
-    image: "/images/products/podcast.jpg",
-  },
-  {
-    id: 4,
-    title: "Проведение мероприятий",
-    text: "Более 300 кв.м. с LED-экранами, профессиональным светом. А еще есть парковка и пространство на крыше.",
-    image: "/images/space/event.jpg",
-  },
-  {
-    id: 5,
-    title: "Съемки клипов",
-    text: "Стильные ролики с минимальными затратами на оборудованную локацию",
-    image: "/images/products/clip.jpg",
-  },
-];
-const solutionSliderOption = {
-  slidesPerView: 1.2,
-  spaceBetween: 20,
-  loop: true,
-  breakpoints: {
-    768: {
-      slidesPerView: 1.5,
-      loop: true,
-    },
-    1024: {
-      slidesPerView: 2.5,
-      loop: true,
-    },
-  },
-};
-
-const ledTitle = "LED-экраны в аренду";
-const ledSubtitle =
-  "Требуется масштаб и вовлечение? Мы решим эту задачу! В наличии топовые экраны UNILUMIN.";
-const ledItems = [
-  {
-    id: 1,
-    title: "Для мероприятий",
-    text: "Конгрессы, корпоративы, конференции, спортивные события, форумы, семинары, тренинги, презентации, благотворительные вечера, кинопоказы, премьеры, стендап, стримы, свадьбы, дни рождения",
-    image: "/images/led/event.jpg",
-  },
-  {
-    id: 2,
-    title: "Выставки",
-    text: "Видеостены, подвесные и напольные экраны, изогнутые конструкции, интеграция в дизайн стенда",
-    image: "/images/products/exh.jpg",
-  },
-  {
-    id: 3,
-    title: "Контент с LED",
-    text: "Реклама, кино, музыкальные клипы и коммерческий контент",
-    image: "/images/led/content.jpg",
-    link: "https://vladagroup-led.ru/",
-  },
-  {
-    id: 4,
-    title: "LED-фотозона",
-    text: "Современный инструмент превращения любого события, будь то корпоратив, свадьба, выставка или презентация, в запоминающийся визуальный experience",
-    image: "/images/products/photozone.jpg",
-  },
-];
-const ledSliderOption = {
-  slidesPerView: 1.2,
-  spaceBetween: 20,
-  breakpoints: {
-    768: {
-      slidesPerView: 1.5,
-    },
-    1024: {
-      slidesPerView: 2.5,
-    },
-  },
-};
 
 const reviewsTitle = "Отзывы";
 const reviewsSubtitle =
@@ -672,37 +601,6 @@ const reviewsSliderOption = {
     },
   },
 };
-
-const teamTitle = "Наша команда";
-const teamSubtitle =
-  "Lorem Ipsum (читается как «Лорем Ипсум») — текст-заглушка, текст-«рыба». Состоит из латинских слов и фраз, но не несёт особого смысла. Также называется «плейсхолдер» — буквально «держатель места». ";
-const team = [
-  {
-    id: 1,
-    name: "Влада Озолина",
-    text: "Основатель ",
-    image: "/images/team/team1.jpg",
-  },
-  {
-    id: 2,
-    name: "Александра Егорьева",
-    text: "Совладелец ",
-    image: "/images/team/team2.jpg",
-    video: true,
-  },
-  {
-    id: 3,
-    name: "Элина Ванецян",
-    text: "Финансовый директор ",
-    image: "/images/team/team3.jpg",
-  },
-  {
-    id: 4,
-    name: "Мария Иванова",
-    text: "Директор света. ",
-    image: "/images/team/team4.jpg",
-  },
-];
 
 const brandsTitle = "Наши клиенты";
 const brandsSubtitle =
@@ -863,6 +761,4 @@ onMounted(() => {
 });
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

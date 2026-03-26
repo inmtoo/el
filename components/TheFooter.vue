@@ -15,7 +15,7 @@
             <a href="mailto:info@zaryadki-el.ru">info@zaryadki-el.ru</a>
           </div>
           <div class="footer__info-text">
-            Время работы: ежедневно с 9:00 до 21:00
+            МО, Дмитров, <br />ул. Промышленная, стр.1, корп.2
           </div>
           <div class="footer__info-text">
             <svg
@@ -47,7 +47,7 @@
             <a href="https://t.me/zaryadki_el">Написать в Telegram</a>
           </div>
 
-          <div class="footer__info-bottom">
+          <!--<div class="footer__info-bottom">
             <div class="footer__info-bottom-title">
               Подписывайтесь на нас в соцсетях
             </div>
@@ -120,14 +120,15 @@
                 </svg>
               </a>
             </div>
-          </div>
+          </div>-->
         </div>
         <div class="footer__map">
           <iframe
-            src="https://yandex.ru/map-widget/v1/?um=constructor%3A170c69629bd045e0f01af8b8526552a8b74b2deb2161978e4d052f9191520b86&amp;source=constructor"
+            src="https://yandex.ru/map-widget/v1/?um=constructor%3Ac94a4451984aa77a2ce85552f6c1d4ea8bc962ad902e26dde6a19afa99462ad7&amp;source=constructor"
             width="100%"
             height="100%"
             frameborder="0"
+            style="min-height: 500px"
           ></iframe>
         </div>
       </div>
