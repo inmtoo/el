@@ -1,5 +1,8 @@
 <template>
   <main class="main">
+    <div class="container">
+      <UITheBreadcrumbs :items="breadcrumbs"></UITheBreadcrumbs>
+    </div>
     <section class="main-promo st-section">
       <div class="container">
         <div class="main-promo__row">
@@ -208,6 +211,11 @@ import { getPowers } from "~/api/powers";
 import { getProducts } from "~/api/products";
 
 const placeholderImg = "/images/main-promo.webp";
+
+const breadcrumbs = [
+  { title: "Главная", link: "/" },
+  { title: "Автомобильные зарядные станции для дома", link: "" },
+];
 
 const selectedPower = ref("");
 const catalogItems = ref<Array<Record<string, any>>>([]);

@@ -8,10 +8,10 @@
         <div class="info-block__row">
           <div class="info-block__text">
             <UITheSectionTitle
-              :title="'Добро пожаловать во Vlada Group'"
+              :title="'Добро пожаловать EL'"
               :subtitle="'Ниже контактная информация, и вы можете в рабочее время с нами связаться. Приезжайте в офис для знакомства, записывайтесь на тест оборудования или заказывайте его на свой проект.'"
-              :author="'Влада Озолина,'"
-              :position="'основатель и вдохновляющая сила VLADA GROUP'"
+              :author="'Юрий Светличный,'"
+              :position="'Создатель бренда EL'"
             ></UITheSectionTitle>
 
             <UITheButton
@@ -19,9 +19,6 @@
               :className="'btn-primary'"
               @click="scrollToElem('.footer')"
             ></UITheButton>
-          </div>
-          <div class="info-block__img">
-            <img src="/images/vlada.jpg" alt="" />
           </div>
         </div>
       </div>
