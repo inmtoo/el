@@ -4,15 +4,15 @@
       <div class="container">
         <div class="main-promo__row">
           <div class="main-promo__left">
-            <h1>Зарядные станции для личного использования</h1>
+            <h1>Зарядные станции для дома</h1>
             <p class="main-promo__desc">
-              Только для тебя! Заряжай свой транспорт дома
+              Подберем и установим зарядную станцию под ключ с гарантией 6 лет
             </p>
             <UITheButtonLink title="Узнать подробнее" link="/catalog" />
           </div>
           <div class="main-promo__right">
             <img
-              src="/images/main-promo.webp"
+              src="/images/main-clients.jpg"
               alt="Зарядные станции для личного использования"
             />
           </div>
@@ -56,7 +56,11 @@
           />
         </div>
         <div class="rent-block__more">
-          <NuxtLink :to="catalogAllLink" class="rent-block__more-link btn btn-primary">Показать все</NuxtLink>
+          <NuxtLink
+            :to="catalogAllLink"
+            class="rent-block__more-link btn btn-primary"
+            >Показать все</NuxtLink
+          >
         </div>
       </div>
     </section>
@@ -98,14 +102,14 @@
         <div class="info-block__row">
           <div class="info-block__text">
             <UITheSectionTitle
-              title="Текст от директора"
-              subtitle="Мы верим, что электрический транспорт - это будущее. И наша миссия - сделать его доступным и удобным для каждого. Наши зарядные станции — это не просто устройства, это ваш шаг в зелёное будущее."
-              author="Иван Иванов"
+              title="Мы верим: будущее за электромобилями"
+              subtitle="Наша миссия — сделать зарядку доступной и удобной для каждого. Станции EL — это не просто оборудование, это ваш уверенный шаг в технологичный и чистый мир"
+              author="Юрий Светличный"
               position="Директор компании"
             />
           </div>
           <div class="info-block__img">
-            <img src="/images/info-block.webp" alt="Директор компании" />
+            <img src="/images/jur.jpg" alt="Юрий Светличный" />
           </div>
         </div>
       </div>
@@ -113,7 +117,7 @@
 
     <FAQ :faq="faq" />
 
-    <section class="subscribe st-section">
+    <!-- <section class="subscribe st-section">
       <div class="container">
         <div class="subscribe__wrap">
           <UITheSectionTitle
@@ -194,7 +198,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section>-->
   </main>
 </template>
 
@@ -228,8 +232,11 @@ async function loadCatalogItems() {
   const products = data?.products || [];
 
   catalogItems.value = products.map((item: any) => {
-    const powerAttr = item.attributes?.find((attr: any) => attr.slug === "pa_moshhnost");
-    const powerName = powerAttr?.options?.map((option: any) => option.name).join(", ") ?? "";
+    const powerAttr = item.attributes?.find(
+      (attr: any) => attr.slug === "pa_moshhnost",
+    );
+    const powerName =
+      powerAttr?.options?.map((option: any) => option.name).join(", ") ?? "";
 
     return {
       id: item.id,
@@ -250,7 +257,9 @@ function getPowerValue(power: any): number {
   return Number(match[0].replace(",", "."));
 }
 
-powers.value = [...powers.value].sort((a, b) => getPowerValue(a) - getPowerValue(b));
+powers.value = [...powers.value].sort(
+  (a, b) => getPowerValue(a) - getPowerValue(b),
+);
 
 await loadCatalogItems();
 
@@ -263,22 +272,22 @@ const advantagesItems = [
   {
     id: 1,
     title: "Удобство и простота использования",
-    text: "",
-    image: placeholderImg,
+    text: "Справится даже далекий т техники человек",
+    image: "/images/features/simple.jpg",
     link: "#",
   },
   {
     id: 2,
     title: "Быстрая и безопасная зарядка",
-    text: "",
-    image: placeholderImg,
+    text: "Снижаем время ожидания, вы будете вовремя там, гже нужно",
+    image: "/images/features/time.jpg",
     link: "#",
   },
   {
     id: 3,
     title: "Экономия на электричестве",
-    text: "",
-    image: placeholderImg,
+    text: "Стоимость электроэнергии дома ниже, используйте это",
+    image: "/images/features/life.jpg",
     link: "#",
   },
 ];
@@ -287,29 +296,29 @@ const serviceItems = [
   {
     id: 1,
     title: "Установка под ключ",
-    text: "",
-    image: placeholderImg,
+    text: "Возьмем на себя весь цикл — от подбора оборудования до запуска и подключения к сети",
+    image: "/images/services/montazh-home.jpg",
     link: "#",
   },
   {
     id: 2,
     title: "Техническая поддержка 24/7",
-    text: "",
-    image: placeholderImg,
+    text: "Ценим ваше время и чувство уверенности, поэтому всегда на связи и готовы помочь",
+    image: "/images/services/support.jpg",
     link: "#",
   },
   {
     id: 3,
-    title: "Гарантия качества",
-    text: "",
-    image: placeholderImg,
+    title: "Согласование с УК/ТСЖ",
+    text: "Мы берём на себя все этапы — от подготовки техдокументации до переговоров с управляющей организацией",
+    image: "/images/services/tszh.jpg",
     link: "#",
   },
   {
     id: 4,
     title: "Обслуживание и ремонт",
-    text: "",
-    image: placeholderImg,
+    text: "Осуществим устранение неполадок и предоставим подменное оборудование. Будьте в движении всегда!",
+    image: "/images/services/to-home.jpg",
     link: "#",
   },
 ];
