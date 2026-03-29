@@ -29,6 +29,13 @@ export async function getFAQ(): Promise<Array<FAQ>> {
 }
 
 export async function getProjects(): Promise<Array<Project>> {
-    const data = await api("/wp-json/wp/v2/posts?categories=128&_embed&per_page=11&order=asc");
+    const data = await api("/wp-json/wp/v2/posts?categories=388&_embed&per_page=11&order=asc");
     return data.map((el: any) => Project.createFromWP(el));
+}
+
+export async function getPortfolioPostBySlug(slug: string): Promise<any | null> {
+    if (!slug) return null;
+    const data = await api("/wp-json/wp/v2/posts", { slug, categories: 388, _embed: 1 });
+    if (!Array.isArray(data) || !data.length) return null;
+    return data[0];
 }

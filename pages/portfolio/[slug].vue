@@ -1,0 +1,133 @@
+<template>
+  <main class="main">
+    <div class="container">
+      <UITheBreadcrumbs :items="breadcrumbs"></UITheBreadcrumbs>
+      <UITheSectionTitle
+        :title="postTitle"
+        :subtitle="postSubtitle"
+      ></UITheSectionTitle>
+      <div class="article">
+        <div class="article__content" v-html="post.content.rendered"></div>
+        <div class="article__shared">
+          <div class="article__shared-title">Поделиться</div>
+          <div class="article__shared-links">
+            <a href="#">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+              >
+                <g clip-path="url(#clip0_3266_104)">
+                  <path
+                    d="M0 15.36C0 8.1192 0 4.49884 2.24942 2.24942C4.49884 0 8.1192 0 15.36 0H16.64C23.8808 0 27.5011 0 29.7506 2.24942C32 4.49884 32 8.1192 32 15.36V16.64C32 23.8808 32 27.5011 29.7506 29.7506C27.5011 32 23.8808 32 16.64 32H15.36C8.1192 32 4.49884 32 2.24942 29.7506C0 27.5011 0 23.8808 0 16.64V15.36Z"
+                    fill="#66cb01"
+                  />
+                  <path
+                    d="M17.027 23.0534C9.73366 23.0534 5.57372 18.0534 5.40039 9.7334H9.05372C9.17372 15.8401 11.867 18.4267 14.0003 18.9601V9.7334H17.4405V15.0001C19.5471 14.7734 21.7602 12.3734 22.5069 9.7334H25.9469C25.3736 12.9867 22.9736 15.3867 21.2669 16.3734C22.9736 17.1734 25.7071 19.2667 26.7471 23.0534H22.9603C22.1469 20.5201 20.1205 18.5601 17.4405 18.2934V23.0534H17.027Z"
+                    fill="white"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_3266_104">
+                    <rect width="32" height="32" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </a>
+            <a href="#">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="33"
+                viewBox="0 0 32 33"
+                fill="none"
+              >
+                <path
+                  d="M27.3453 4.63879C24.3528 1.65671 20.3629 0 16.1512 0C7.3955 0 0.302237 7.06863 0.302237 15.794C0.302237 18.5552 1.07806 21.3163 2.40805 23.6357L0.191406 31.8088L8.61466 29.5999C10.9421 30.8148 13.4913 31.4775 16.1512 31.4775C24.907 31.4775 32.0002 24.4089 32.0002 15.6835C31.8894 11.597 30.3378 7.62087 27.3453 4.63879ZM23.7987 21.4268C23.4662 22.3104 21.9145 23.1939 21.1387 23.3044C20.4737 23.4148 19.587 23.4148 18.7004 23.1939C18.1462 22.9731 17.3704 22.7522 16.4837 22.3104C12.4938 20.6537 9.94464 16.6776 9.72298 16.3462C9.50131 16.1253 8.0605 14.2477 8.0605 12.2597C8.0605 10.2716 9.05798 9.38803 9.39048 8.94624C9.72297 8.50445 10.1663 8.50445 10.4988 8.50445C10.7205 8.50445 11.053 8.50445 11.2746 8.50445C11.4963 8.50445 11.8288 8.394 12.1613 9.16713C12.4938 9.94026 13.2696 11.9283 13.3804 12.0388C13.4913 12.2597 13.4913 12.4806 13.3804 12.7014C13.2696 12.9223 13.1588 13.1432 12.9371 13.3641C12.7154 13.585 12.4938 13.9164 12.3829 14.0268C12.1613 14.2477 11.9396 14.4686 12.1613 14.7999C12.3829 15.2417 13.1588 16.4567 14.3779 17.5611C15.9296 18.8865 17.1487 19.3283 17.5921 19.5492C18.0354 19.7701 18.2571 19.6596 18.4787 19.4387C18.7004 19.2178 19.4762 18.3343 19.6979 17.8925C19.9195 17.4507 20.252 17.5611 20.5845 17.6716C20.917 17.782 22.912 18.7761 23.2445 18.9969C23.6878 19.2178 23.9095 19.3283 24.0203 19.4387C24.1312 19.7701 24.1312 20.5432 23.7987 21.4268Z"
+                  fill="#66cb01"
+                />
+              </svg>
+            </a>
+            <a href="#">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 32 32"
+                fill="none"
+              >
+                <g clip-path="url(#clip0_3266_105)">
+                  <path
+                    d="M16 32C24.8366 32 32 24.8366 32 16C32 7.16344 24.8366 0 16 0C7.16344 0 0 7.16344 0 16C0 24.8366 7.16344 32 16 32Z"
+                    fill="#66cb01"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M7.24236 15.8312C11.9067 13.799 15.017 12.4593 16.5732 11.812C21.0166 9.96384 21.9399 9.64279 22.5417 9.63219C22.674 9.62986 22.97 9.66266 23.1617 9.81821C23.3235 9.94956 23.3681 10.127 23.3894 10.2515C23.4107 10.376 23.4372 10.6597 23.4161 10.8814C23.1753 13.4114 22.1335 19.5509 21.6034 22.3846C21.3791 23.5836 20.9375 23.9856 20.51 24.0249C19.5808 24.1104 18.8752 23.4109 17.9753 22.821C16.5671 21.8979 15.7716 21.3232 14.4047 20.4225C12.825 19.3815 13.849 18.8093 14.7493 17.8743C14.9849 17.6296 19.0787 13.9059 19.158 13.5681C19.1679 13.5258 19.1771 13.3684 19.0835 13.2852C18.99 13.2021 18.8519 13.2305 18.7523 13.2531C18.611 13.2852 16.3614 14.7721 12.0034 17.7139C11.3648 18.1523 10.7864 18.366 10.2682 18.3548C9.69694 18.3424 8.59802 18.0318 7.78109 17.7662C6.77909 17.4405 5.98272 17.2683 6.05206 16.7152C6.08818 16.427 6.48495 16.1324 7.24236 15.8312Z"
+                    fill="white"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_3266_105">
+                    <rect width="32" height="32" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</template>
+
+<script setup lang="ts">
+import { getPortfolioPostBySlug } from "~/api/products";
+
+const route = useRoute();
+const slug = String(route.params.slug);
+
+const raw = await getPortfolioPostBySlug(slug);
+if (!raw) {
+  throw createError({ statusCode: 404, statusMessage: "Страница не найдена" });
+}
+
+const post = raw;
+
+const postTitle = post.title?.rendered || "";
+const postDescription = post.excerpt?.rendered || "";
+const postSubtitle = postDescription || "Проект из портфолио EL.";
+const yoast = post.yoast_head_json;
+
+
+const metaTitle = ref("");
+const metaDescription = ref("");
+const metaImage = ref("");
+
+metaTitle.value = yoast?.title || postTitle || "Портфолио";
+metaDescription.value = yoast?.description || postDescription || postSubtitle;
+metaImage.value = post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "";
+
+useHead({
+  title: metaTitle,
+  meta: [
+    { name: "description", content: metaDescription },
+    { property: "og:title", content: metaTitle },
+    { property: "og:description", content: metaDescription },
+    ...(metaImage.value
+      ? [{ property: "og:image", content: metaImage }]
+      : []),
+  ],
+});
+
+const breadcrumbs = [
+  { title: "Главная", link: "/" },
+  { title: "Портфолио", link: "/#portfolio" },
+  { title: postTitle, link: "" },
+];
+</script>
+
+<style lang="scss"></style>

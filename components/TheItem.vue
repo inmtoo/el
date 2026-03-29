@@ -1,12 +1,11 @@
 <template>
   <a class="item" :href="item.link" ref="itemRef">
-    <div
-      :class="['item__img', classModifyImg ? 'item__img' + classModifyImg : '']"
-    >
+    <div :class="['item__img', classModifyImg ? 'item__img' + classModifyImg : '']">
       <img :src="item.image" v-if="item.link == null" :alt="item.title" />
-      <a :href="item.link" :target="item.target" v-if="item.link"
-        ><img :src="item.image" :alt="item.title"
-      /></a>
+      <a :href="item.link" :target="item.target" v-if="item.link">
+        <img v-if="item.image" :src="item.image" :alt="item.title"/>
+        <img v-else src="/images/placeholder.webp" alt="Placeholder" style="opacity: 0.3;"/>
+      </a>
     </div>
     <div class="item__info">
       <div class="item__name" v-if="item.title && item.link == null" v-html="item.title"></div>
@@ -56,7 +55,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 
-const props = defineProps<{
+defineProps<{
   item: Record<string, any>;
   classModifyImg?: string;
 }>();

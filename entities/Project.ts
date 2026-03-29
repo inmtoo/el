@@ -4,13 +4,18 @@ export class Project {
     title: string;
     text: string = "";
     image: string;
+    link?: string;
 
     static createFromWP(obj: any): Project {
-        return new Project(
-           obj.id,
+        const project = new Project(
+            obj.id,
             obj.title.rendered,
             obj._embedded?.["wp:featuredmedia"]?.[0]?.source_url || ""
         );
+        if (obj.slug) {
+            project.link = `/portfolio/${obj.slug}`;
+        }
+        return project;
     }
 
     constructor(id: number, title: string, image: string) {

@@ -142,7 +142,7 @@
       </div>
     </section>
 
-    <section class="st-section slider" style="display: none">
+    <!-- <section class="st-section slider" style="display: none">
       <div class="container">
         <UITheSectionTitle
           :title="solutionsTitle"
@@ -172,7 +172,7 @@
           typeItem="item"
         ></TheSwiperPage>
       </div>
-    </section>
+    </section> -->
 
     <Projects />
 

@@ -1,7 +1,7 @@
 <template>
   <div :class="['section-title', className]">
     <h2 class="section-title__title">{{ title }}</h2>
-    <p v-if="subtitle" class="section-title__subtitle">{{ subtitle }}</p>
+    <p v-if="subtitle" class="section-title__subtitle" v-html="subtitle"></p>
     <p v-if="author">
       <i
         >{{ author }}<br /><span v-if="position">{{ position }}</span></i
