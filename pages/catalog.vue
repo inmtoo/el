@@ -21,7 +21,7 @@
             ]"
           >
             <img
-              src="/images/main-promo.webp"
+              src="/images/main-promo.jpg"
               alt="Каталог зарядных станций для электромобилей"
             />
 
@@ -70,7 +70,7 @@
             {{ power.name }}
           </button>
         </div>
-        
+
         <div class="features__row">
           <TheItem
             v-for="(item, index) in catalogItems"
@@ -84,7 +84,7 @@
       </div>
     </section>
 
-    <FAQ :faq="faq"  />
+    <FAQ :faq="faq" />
 
     <section class="subscribe st-section">
       <div class="container">
@@ -201,8 +201,7 @@ useHead({
     },
     {
       property: "og:title",
-      content:
-        "Каталог зарядных станций | Подбор и установка под ключ",
+      content: "Каталог зарядных станций | Подбор и установка под ключ",
     },
     {
       property: "og:description",
@@ -232,8 +231,7 @@ const selectedPower = ref(readPowerFromQuery());
 const catalogItems = ref<Array<Record<string, any>>>([]);
 const powers = ref<Array<Record<string, any>>>([]);
 
-
-async function loadCatalogItems() {  
+async function loadCatalogItems() {
   const page = Number(route.query.page) || 1;
   const per_page = 8;
   const power = selectedPower.value || "";
@@ -249,8 +247,11 @@ async function loadCatalogItems() {
   totalPages.value = Math.max(1, Number(data?.total_pages) || 1);
 
   catalogItems.value = products.map((item: any) => {
-    const powerAttr = item.attributes?.find((attr: any) => attr.slug === "pa_moshhnost");
-    const powerName = powerAttr?.options?.map((option: any) => option.name).join(", ") ?? "";
+    const powerAttr = item.attributes?.find(
+      (attr: any) => attr.slug === "pa_moshhnost",
+    );
+    const powerName =
+      powerAttr?.options?.map((option: any) => option.name).join(", ") ?? "";
 
     return {
       id: item.id,
@@ -273,7 +274,9 @@ function getPowerValue(power: any): number {
   return Number(match[0].replace(",", "."));
 }
 
-powers.value = [...powers.value].sort((a, b) => getPowerValue(a) - getPowerValue(b));
+powers.value = [...powers.value].sort(
+  (a, b) => getPowerValue(a) - getPowerValue(b),
+);
 
 async function onSelectPower(slug: string) {
   selectedPower.value = slug;
@@ -297,13 +300,16 @@ watch(
     if (currentPage.value !== p) currentPage.value = p;
     await loadCatalogItems();
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 watch(currentPage, (p) => {
   const q = Number(route.query.page) || 1;
   if (p !== q && p >= 1 && p <= totalPages.value) {
-    navigateTo({ path: route.path, query: { ...route.query, page: String(p) } });
+    navigateTo({
+      path: route.path,
+      query: { ...route.query, page: String(p) },
+    });
   }
 });
 
@@ -768,8 +774,8 @@ async function testProductsCount() {
     const products = Array.isArray(data)
       ? data
       : Array.isArray(data?.products)
-      ? data.products
-      : [];
+        ? data.products
+        : [];
 
     console.log("Products returned:", products.length);
   } catch (error) {
