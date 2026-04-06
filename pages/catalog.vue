@@ -50,7 +50,18 @@
           subtitle="Выбор для Вас. Каталог электрозарядных станций для дома, паркингов, ТЦ, отелей и АЗС."
         />
 
-        <div class="catalog-powers">
+        <div v-if="subcategories.length && !hasSelectedProductCategory()" class="rent-block__row rent-block__row--2">
+          <TheRentItem
+            v-for="subcategory in subcategories"
+            :item="{
+              title: subcategory.name,
+              image: subcategory.slug === 'el-biz' ? catalogPlaceholderImgBusiness : catalogPlaceholderImgPrivate,
+              link: `/catalog?category=${subcategory.slug}&page=1`,
+            }"
+          />
+        </div>
+
+        <div v-if="hasSelectedProductCategory()" class="catalog-powers">
           <button
             type="button"
             class="catalog-powers__item"
@@ -71,14 +82,14 @@
           </button>
         </div>
 
-        <div class="features__row">
+        <div v-if="hasSelectedProductCategory()" class="features__row">
           <TheItem
             v-for="(item, index) in catalogItems"
             :key="index"
             :item="item"
           />
         </div>
-        <div class="catalog-pagination">
+        <div v-if="hasSelectedProductCategory()" class="catalog-pagination">
           <Pagination v-model:page="currentPage" :max-page="totalPages" />
         </div>
       </div>
@@ -185,6 +196,8 @@ import { useRoute } from "vue-router";
 import { useModal } from "~/composables/useModal";
 import { getPowers } from "~/api/powers";
 import { getProducts } from "~/api/products";
+import { getSubcategoriesByParent } from "~/api/categories";
+import TheRentItem from "~/components/UI/TheRentItem.vue";
 
 useHead({
   title: "Каталог зарядных станций | Подбор и установка зарядки под ключ",
@@ -214,7 +227,9 @@ useHead({
 
 const isOpenPopup = useModal();
 
-const catalogPlaceholderImg = "/images/main-promo.webp";
+const catalogPlaceholderImg = "/images/main-promo.jpg";
+const catalogPlaceholderImgBusiness = "/images/main-biz.jpg";
+const catalogPlaceholderImgPrivate = "/images/main-clients.jpg";
 
 const route = useRoute();
 
@@ -226,12 +241,34 @@ function readPowerFromQuery(): string {
   if (Array.isArray(p)) return String(p[0] ?? "");
   return p ? String(p) : "";
 }
+
+function readCategoryFromQuery(): string | undefined {
+  const c = route.query.category;
+  const s = Array.isArray(c) ? String(c[0] ?? "") : c ? String(c) : "";
+  return s || undefined;
+}
+
+function hasSelectedProductCategory(): boolean {
+  const category = readCategoryFromQuery();
+  return category === "el-biz" || category === "el-priv";
+}
+
 const selectedPower = ref(readPowerFromQuery());
 
 const catalogItems = ref<Array<Record<string, any>>>([]);
 const powers = ref<Array<Record<string, any>>>([]);
+const subcategories = ref<Array<Record<string, any>>>([]);
+
+subcategories.value = await getSubcategoriesByParent("el");
 
 async function loadCatalogItems() {
+  if (!hasSelectedProductCategory()) {
+    catalogItems.value = [];
+    totalProducts.value = 0;
+    totalPages.value = 1;
+    return;
+  }
+
   const page = Number(route.query.page) || 1;
   const per_page = 8;
   const power = selectedPower.value || "";
@@ -239,6 +276,7 @@ async function loadCatalogItems() {
   const data = await getProducts({
     page,
     per_page,
+    category: readCategoryFromQuery(),
     power: power || undefined,
   });
 
@@ -263,9 +301,7 @@ async function loadCatalogItems() {
   });
 }
 
-powers.value = await getPowers();
-
-console.log("POWERS", powers.value);
+powers.value = await getPowers({ category: readCategoryFromQuery() });
 
 function getPowerValue(power: any): number {
   const raw = String(power?.name ?? "");
@@ -294,8 +330,9 @@ async function onSelectPower(slug: string) {
 const currentPage = ref(Number(route.query.page) || 1);
 
 watch(
-  () => [route.query.page, route.query.power],
+  () => [route.query.page, route.query.power, route.query.category],
   async () => {
+    selectedPower.value = readPowerFromQuery();
     const p = Number(route.query.page) || 1;
     if (currentPage.value !== p) currentPage.value = p;
     await loadCatalogItems();

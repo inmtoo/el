@@ -476,7 +476,6 @@ const catalogAllLink = computed(() => {
   if (slug) {
     return { path: "/catalog", query: { power: slug } };
   }
-
   return "/catalog";
 });
 
@@ -484,6 +483,8 @@ async function loadCatalogItems() {
   const data = await getProducts({
     page: 1,
     per_page: 8,
+    category: "el",
+    sub: true,
     power: selectedPower.value || undefined,
   });
 
@@ -506,7 +507,7 @@ async function loadCatalogItems() {
   });
 }
 
-powers.value = await getPowers();
+powers.value = await getPowers({ category: "el", sub: true });
 
 function getPowerValue(power: any): number {
   const raw = String(power?.name ?? "");

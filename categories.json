@@ -1,0 +1,189 @@
+[
+  {
+    "id": 15,
+    "name": "Misc",
+    "slug": "misc",
+    "description": "",
+    "count": 0,
+    "link": "https://zaryadki-el.ru/product-category/misc/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 391,
+    "name": "El",
+    "slug": "el",
+    "description": "",
+    "count": 210,
+    "link": "https://zaryadki-el.ru/product-category/el/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 58,
+    "name": "Адаптеры",
+    "slug": "adaptery",
+    "description": "",
+    "count": 4,
+    "link": "https://zaryadki-el.ru/product-category/adaptery/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 158,
+    "name": "Доп. оборудование",
+    "slug": "dop-oborudovanie",
+    "description": "",
+    "count": 3,
+    "link": "https://zaryadki-el.ru/product-category/dop-oborudovanie/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 55,
+    "name": "Зарядные кабели",
+    "slug": "zaryadnye-kabeli",
+    "description": "",
+    "count": 0,
+    "link": "https://zaryadki-el.ru/product-category/zaryadnye-kabeli/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 54,
+    "name": "Зарядные станции",
+    "slug": "zaryadnye-stanczii",
+    "description": "",
+    "count": 655,
+    "link": "https://zaryadki-el.ru/product-category/zaryadnye-stanczii/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 377,
+    "name": "Зарядные хабы",
+    "slug": "zaryadnye-haby",
+    "description": "",
+    "count": 2,
+    "link": "https://zaryadki-el.ru/product-category/zaryadnye-haby/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 145,
+    "name": "Защитные боксы",
+    "slug": "zashhitnye-boksy",
+    "description": "",
+    "count": 0,
+    "link": "https://zaryadki-el.ru/product-category/zashhitnye-boksy/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 221,
+    "name": "Козырьки для зарядных станций",
+    "slug": "kozyrki-dlya-zaryadnyh-stanczij",
+    "description": "",
+    "count": 5,
+    "link": "https://zaryadki-el.ru/product-category/kozyrki-dlya-zaryadnyh-stanczij/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 144,
+    "name": "Настенные крепления",
+    "slug": "nastennye-krepleniya",
+    "description": "",
+    "count": 1,
+    "link": "https://zaryadki-el.ru/product-category/nastennye-krepleniya/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 220,
+    "name": "Опоры под стойки, подставки под ЭЗС",
+    "slug": "opory-pod-stojki-podstavki",
+    "description": "",
+    "count": 2,
+    "link": "https://zaryadki-el.ru/product-category/opory-pod-stojki-podstavki/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 56,
+    "name": "Переходники",
+    "slug": "perehodniki",
+    "description": "",
+    "count": 4,
+    "link": "https://zaryadki-el.ru/product-category/perehodniki/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 146,
+    "name": "Розетки",
+    "slug": "rozetki",
+    "description": "",
+    "count": 0,
+    "link": "https://zaryadki-el.ru/product-category/rozetki/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 171,
+    "name": "Солнечная энергия",
+    "slug": "solnechnaya-energiya",
+    "description": "",
+    "count": 1,
+    "link": "https://zaryadki-el.ru/product-category/solnechnaya-energiya/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 143,
+    "name": "Стойки для зарядных станций",
+    "slug": "stojki-dlya-zaryadnih-stancii",
+    "description": "",
+    "count": 16,
+    "link": "https://zaryadki-el.ru/product-category/stojki-dlya-zaryadnih-stancii/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 147,
+    "name": "Умные счётчики и системы балансировки DLB",
+    "slug": "umnye-schetchiki-i-sistemy-balansirovki-dlb",
+    "description": "",
+    "count": 0,
+    "link": "https://zaryadki-el.ru/product-category/umnye-schetchiki-i-sistemy-balansirovki-dlb/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 242,
+    "name": "Электрический кабель",
+    "slug": "elektricheskij-kabel",
+    "description": "",
+    "count": 18,
+    "link": "https://zaryadki-el.ru/product-category/elektricheskij-kabel/",
+    "parent_id": 0,
+    "thumbnail": "",
+    "order": 0
+  }
+]

@@ -16,3 +16,7 @@ export async function getCategories(params: CategoriesParams = {}): Promise<any>
 export function getCategoryBySlug(slug: string): Promise<any> {
     return api(`/wp-json/public-api/v1/category/${slug}`);
 }
+
+export async function getSubcategoriesByParent(parent: string | number): Promise<any> {
+    return (await api("/wp-json/public-api/v1/categories", { parent })).filter((el: any) => el.id !== 97);
+}

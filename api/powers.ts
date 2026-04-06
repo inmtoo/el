@@ -6,6 +6,16 @@ export interface Power {
   slug: string;
 }
 
-export async function getPowers(): Promise<Power[]> {
-  return api("/wp-json/public-api/v1/powers");
+interface PowersParams {
+  category?: number | string;
+  sub?: boolean;
+}
+
+export async function getPowers(params: PowersParams = {}): Promise<Power[]> {
+  const defaultParams: PowersParams = {
+    sub: false,
+  };
+  params = { ...defaultParams, ...params };
+
+  return api("/wp-json/public-api/v1/powers", params);
 }

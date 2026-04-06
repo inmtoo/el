@@ -1,0 +1,24 @@
+[
+  {
+    "id": 392,
+    "name": "Для бизнеса",
+    "slug": "el-biz",
+    "description": "",
+    "count": 201,
+    "link": "https://zaryadki-el.ru/product-category/el/el-biz/",
+    "parent_id": 391,
+    "thumbnail": "",
+    "order": 0
+  },
+  {
+    "id": 393,
+    "name": "Для частников",
+    "slug": "el-priv",
+    "description": "",
+    "count": 24,
+    "link": "https://zaryadki-el.ru/product-category/el/el-priv/",
+    "parent_id": 391,
+    "thumbnail": "",
+    "order": 0
+  }
+]

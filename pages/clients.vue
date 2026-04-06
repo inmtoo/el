@@ -11,7 +11,10 @@
             <p class="main-promo__desc">
               Подберем и установим зарядную станцию под ключ с гарантией 6 лет
             </p>
-            <UITheButtonLink title="Узнать подробнее" link="/catalog" />
+            <UITheButtonLink
+              title="Узнать подробнее"
+              link="/catalog?category=el-priv"
+            />
           </div>
           <div class="main-promo__right">
             <img
@@ -212,6 +215,9 @@ import { getProducts } from "~/api/products";
 
 const placeholderImg = "/images/main-promo.webp";
 
+/** Подкатегория EL «Для частников» */
+const pageCategorySlug = "el-priv";
+
 const breadcrumbs = [
   { title: "Главная", link: "/" },
   { title: "Автомобильные зарядные станции для дома", link: "" },
@@ -222,18 +228,16 @@ const catalogItems = ref<Array<Record<string, any>>>([]);
 const powers = ref<Array<Record<string, any>>>([]);
 
 const catalogAllLink = computed(() => {
-  const slug = selectedPower.value;
-  if (slug) {
-    return { path: "/catalog", query: { power: slug } };
-  }
-
-  return "/catalog";
+  const q: Record<string, string> = { category: pageCategorySlug };
+  if (selectedPower.value) q.power = selectedPower.value;
+  return { path: "/catalog", query: q };
 });
 
 async function loadCatalogItems() {
   const data = await getProducts({
     page: 1,
     per_page: 8,
+    category: pageCategorySlug,
     power: selectedPower.value || undefined,
   });
 
@@ -256,7 +260,7 @@ async function loadCatalogItems() {
   });
 }
 
-powers.value = await getPowers();
+powers.value = await getPowers({ category: "el-priv" });
 
 function getPowerValue(power: any): number {
   const raw = String(power?.name ?? "");

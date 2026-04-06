@@ -6,13 +6,15 @@ interface ProductsParams {
     page?: number,
     per_page?: number,
     category?: number | string,
+    sub?: boolean,
     power?: string
 }
 
 export function getProducts(params: ProductsParams = {}): Promise<any> {
     const defaultParams: ProductsParams = {
         page: 1,
-        per_page: 8
+        per_page: 8,
+        sub: false
     };
     params = {...defaultParams, ...params};
 
