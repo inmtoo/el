@@ -1,5 +1,5 @@
 <template>
-  <main class="main" v-if="useRoute().params.slug !== 'ekrany'">
+  <main class="main">
     <div class="container">
       <UITheBreadcrumbs :items="breadcrumbs"></UITheBreadcrumbs>
     </div>
@@ -111,22 +111,11 @@
       </div>
     </section>
   </main>
-  <Screens
-    v-else
-    v-model:page="page"
-    :subcategories="subcategories"
-    :products="products"
-    :cat-name="catName"
-    :cat-description="catDescription"
-    :cat-thumbnail="catThumbnail"
-    :total-pages="totalPages"
-  />
 </template>
 
 <script setup lang="ts">
 import { getCategories, getCategoryBySlug } from "~/api/categories";
 import { getProducts } from "~/api/products";
-import Screens from "~/components/layouts/categories/Screens.vue";
 import Catalog from "~/components/blocks/Catalog.vue";
 
 const isOpenPopup = useModal();
