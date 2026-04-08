@@ -39,7 +39,6 @@ export const BlocksCatalog: typeof import("../components/blocks/Catalog.vue")['d
 export const BlocksFAQ: typeof import("../components/blocks/FAQ.vue")['default']
 export const BlocksFormWrapper: typeof import("../components/blocks/FormWrapper.vue")['default']
 export const BlocksProjects: typeof import("../components/blocks/Projects.vue")['default']
-export const LayoutsCategoriesScreens: typeof import("../components/layouts/categories/Screens.vue")['default']
 export const PartialsPagination: typeof import("../components/partials/Pagination.vue")['default']
 export const NuxtWelcome: typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']
 export const NuxtLayout: typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
@@ -90,7 +89,6 @@ export const LazyBlocksCatalog: LazyComponent<typeof import("../components/block
 export const LazyBlocksFAQ: LazyComponent<typeof import("../components/blocks/FAQ.vue")['default']>
 export const LazyBlocksFormWrapper: LazyComponent<typeof import("../components/blocks/FormWrapper.vue")['default']>
 export const LazyBlocksProjects: LazyComponent<typeof import("../components/blocks/Projects.vue")['default']>
-export const LazyLayoutsCategoriesScreens: LazyComponent<typeof import("../components/layouts/categories/Screens.vue")['default']>
 export const LazyPartialsPagination: LazyComponent<typeof import("../components/partials/Pagination.vue")['default']>
 export const LazyNuxtWelcome: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/welcome.vue")['default']>
 export const LazyNuxtLayout: LazyComponent<typeof import("../node_modules/nuxt/dist/app/components/nuxt-layout")['default']>

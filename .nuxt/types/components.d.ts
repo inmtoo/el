@@ -39,7 +39,6 @@ interface _GlobalComponents {
   BlocksFAQ: typeof import("../../components/blocks/FAQ.vue")['default']
   BlocksFormWrapper: typeof import("../../components/blocks/FormWrapper.vue")['default']
   BlocksProjects: typeof import("../../components/blocks/Projects.vue")['default']
-  LayoutsCategoriesScreens: typeof import("../../components/layouts/categories/Screens.vue")['default']
   PartialsPagination: typeof import("../../components/partials/Pagination.vue")['default']
   NuxtWelcome: typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']
   NuxtLayout: typeof import("../../node_modules/nuxt/dist/app/components/nuxt-layout")['default']
@@ -90,7 +89,6 @@ interface _GlobalComponents {
   LazyBlocksFAQ: LazyComponent<typeof import("../../components/blocks/FAQ.vue")['default']>
   LazyBlocksFormWrapper: LazyComponent<typeof import("../../components/blocks/FormWrapper.vue")['default']>
   LazyBlocksProjects: LazyComponent<typeof import("../../components/blocks/Projects.vue")['default']>
-  LazyLayoutsCategoriesScreens: LazyComponent<typeof import("../../components/layouts/categories/Screens.vue")['default']>
   LazyPartialsPagination: LazyComponent<typeof import("../../components/partials/Pagination.vue")['default']>
   LazyNuxtWelcome: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/welcome.vue")['default']>
   LazyNuxtLayout: LazyComponent<typeof import("../../node_modules/nuxt/dist/app/components/nuxt-layout")['default']>

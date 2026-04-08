@@ -2632,7 +2632,6 @@ $pagination-gradient: linear-gradient(90deg, #66CB01 0%, #1E95D5 50%, #1E95D5 50
     font-size: 1.25rem;    
     font-weight: 300;
 
-
     @media (max-width: 1499px) {
       flex: 0 0 calc(100% - 20rem);
       max-width: calc(100% - 20rem);
@@ -2644,6 +2643,11 @@ $pagination-gradient: linear-gradient(90deg, #66CB01 0%, #1E95D5 50%, #1E95D5 50
       order: 1;
       font-size: 1rem;
       padding-right: 0;
+    }
+
+    img {
+      width: auto;
+      height: auto;
     }
 
     ul {
