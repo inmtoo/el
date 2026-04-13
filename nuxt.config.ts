@@ -10,6 +10,9 @@ export default defineNuxtConfig({
   ],
   app: {
     head: {
+        htmlAttrs: {
+            lang: 'ru'
+        },
       title: 'Зарядные станции под ключ | Установка ЭЗС в Москве и России',
       meta: [
         { charset: 'utf-8' },
