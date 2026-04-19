@@ -18,56 +18,56 @@
               >
                 <img :src="thumb.thumbUrl" alt="" />
               </a>
-
-              <!--                            <a class="product__thumbs&#45;&#45;video" href="#" @click.prevent="showVideo">-->
-              <!--                                <img src="/images/promo_image.webp" alt="">-->
-              <!--                                <svg width="94" height="72" viewBox="0 0 94 72" fill="none"-->
-              <!--                                     xmlns="http://www.w3.org/2000/svg">-->
-              <!--                                    <foreignObject x="-173.968" y="-173.968" width="441.935" height="419.935">-->
-              <!--                                        <div xmlns="http://www.w3.org/1999/xhtml"-->
-              <!--                                             style="backdrop-filter:blur(86.98px);clip-path:url(#bgblur_0_6005_538_clip_path);height:100%;width:100%"></div>-->
-              <!--                                    </foreignObject>-->
-              <!--                                    <rect data-figma-bg-blur-radius="173.968" width="94" height="72" rx="13.0476"-->
-              <!--                                          fill="#FFECE3"/>-->
-              <!--                                    <path d="M56.3208 35.6137C57.2264 36.2299 57.2264 37.7701 56.3208 38.3863L41.0377 48.7832C40.1321 49.3993 39 48.6291 39 47.3969L39 26.6031C39 25.3709 40.1321 24.6007 41.0377 25.2168L56.3208 35.6137Z"-->
-              <!--                                          fill="#DFB57A"/>-->
-              <!--                                    <defs>-->
-              <!--                                        <clipPath id="bgblur_0_6005_538_clip_path"-->
-              <!--                                                  transform="translate(173.968 173.968)">-->
-              <!--                                            <rect width="94" height="72" rx="13.0476"/>-->
-              <!--                                        </clipPath>-->
-              <!--                                    </defs>-->
-              <!--                                </svg>-->
-              <!--                            </a>-->
             </div>
           </div>
 
           <div class="product__info">
             <h1 v-html="product.productName"></h1>
-            <div class="product__info-descr" v-html="product.productText"></div>
-            <div
+            <!-- <div class="product__info-descr" v-html="description"></div> -->
+            <div v-if="product.charsHtml" class="product__info-params">
+              <div class="product__info-params-title">Характеристики</div>
+              <div
+                class="product__info-descr"
+                v-html="product.charsHtml"
+              ></div>
+            </div>
+            <!-- <div
               class="product__info-compound"
               v-if="product.compound.length > 0"
             >
               Состав: <span>{{ product.compound.join(", ") }}</span>
-            </div>
+            </div> -->
             <div
               class="product__info-slider"
               v-if="product.ingredients.length > 0"
             >
               <TheSwiperProduct :items="product.ingredients"></TheSwiperProduct>
-            </div>            
-
-            <!--                        <div class="product__info-row">-->
-            <!--                            <div class="product__info-count">-->
-            <!--                                <span>-</span>-->
-            <!--                                <input type="text" name="count" value="1">-->
-            <!--                                <span>+</span>-->
-            <!--                            </div>-->
-            <!--                            <div class="product__info-price">{{ product.productPrice }} ₽</div>-->
-            <!--                        </div>-->
-            <!--                        <button class="btn btn-primary">В корзину</button>-->
+            </div>       
           </div>
+        </div>
+
+        <div class="product-tabs">
+          <button v-if="description.trim() !== ''" type="button" :class="activeProductTab === 'description' ? 'product-tabs__btn btn btn-primary' : 'product-tabs__btn btn'" @click="activeProductTab = 'description'">
+            Описание
+          </button>
+          <button v-if="techCharsDescriptionHtml.trim() !== '' || tableCharsHtml.trim() !== '' || shortDescriptionHtml.trim() !== ''" type="button" :class="activeProductTab === 'characters' ? 'product-tabs__btn btn btn-primary' : 'product-tabs__btn btn'" @click="activeProductTab = 'characters'">
+            Технические характеристики
+          </button>
+          <button v-if="complHtml.trim() !== ''" type="button" :class="activeProductTab === 'complect' ? 'product-tabs__btn btn btn-primary' : 'product-tabs__btn btn'" @click="activeProductTab = 'complect'">
+            Комплектация
+          </button>
+        </div>
+
+        <div v-show="activeProductTab === 'description' && description.trim() !== ''" class="product-tabs__wrap">
+          <div class="product-tabs__content" v-html="description"></div>
+        </div>
+        <div v-show="activeProductTab === 'characters'" class="product-tabs__wrap">
+          <div class="product-tabs__content" v-html="techCharsDescriptionHtml"></div>
+          <div class="product-tabs__content" v-html="tableCharsHtml"></div>
+          <div class="product-tabs__content" v-html="shortDescriptionHtml"></div>
+        </div>
+        <div v-show="activeProductTab === 'complect'" class="product-tabs__content">
+          <div class="product-tabs__content" v-html="complHtml"></div>
         </div>
       </div>
     </section>
@@ -111,6 +111,10 @@ useHead({
     { property: "og:image", content: image },
   ],
 });
+
+const activeProductTab = ref<"description" | "characters" | "complect">(
+  "description",
+);
 
 const faq = [
   {
@@ -196,27 +200,71 @@ const breadcrumbs = [
   { title: "Главная", link: "/" },
   { title: "Каталог зарядных станций", link: "/catalog" },
 ];
-// if (data.categories && data.categories.length > 0) {
-//   const cat = data.categories[0];
-//   cat.parent_tree.forEach((el: any) => {
-//     breadcrumbs.push({
-//       title: el.name,
-//       link: `/category/${el.slug}`,
-//     });
-//   });
-//   breadcrumbs.push({
-//     title: cat.name,
-//     link: `/category/${cat.slug}`,
-//   });
-// }
+
 breadcrumbs.push({
   title: data.name,
   link: "",
 });
 
+const funkczionalStanczii = data.meta_data?.funkczional_stanczii;
+const charsHtml =
+  typeof funkczionalStanczii === "string" && funkczionalStanczii.trim()
+    ? funkczionalStanczii
+      .replaceAll("\r\n\r\n", "<br>")
+      .replaceAll("\r\n", "<br>")
+      .replaceAll("\r", "<br>")
+      .replaceAll("\n", "<br>")
+    : "";
+
+// Данные для таба характеристик
+const techCharsDescription = data.meta_data?.["opisanie_tehnicheskih_har-tik"];
+const techCharsDescriptionHtml = typeof techCharsDescription === "string" && techCharsDescription.trim()
+  ? techCharsDescription
+    .replaceAll("\r\n\r\n", "<br>")
+    .replaceAll("\r\n", "<br>")
+    .replaceAll("\r", "<br>")
+    .replaceAll("\n", "<br>")
+  : "";
+
+const tableChars = data.attributes;
+const tableCharsHtml = `<table class="product-tab__content-short-table">${(tableChars ?? [])
+  .map(
+    (el: any) => `
+    <tr>
+      <th>${el.name}</th>
+      <td>${(el.options ?? [])
+        .map((option: any) => option)
+        .join(", ")}</td>
+    </tr>
+  `,
+  )
+  .join("")}</table>`;
+
+const shortDescription = data.short_description;
+const shortDescriptionHtml = typeof shortDescription === "string" && shortDescription.trim()
+  ? shortDescription
+    .replaceAll("\r", "")
+    .replaceAll("\n", "")
+  : "";
+// Конец данных для таба характеристик
+
+// Данные для таба комплектации
+const compl = data.meta_data?.["komplektacziya"];
+const complHtml = typeof compl === "string" && compl.trim()
+  ? compl
+    .replaceAll("\r", "")
+    .replaceAll("\n", "")
+  : "";
+// Конец данных для таба комплектации
+
+
+
+    
+
 const product = ref({
   productId: data.id,
   productName: data.name,
+  charsHtml,
   productText: data.description.replaceAll("\r\n", "<br>").replaceAll("\r", "<br>").replaceAll("\n", "<br>"),
   compound: [],
   ingredients: [],

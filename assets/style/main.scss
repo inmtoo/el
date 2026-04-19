@@ -606,6 +606,98 @@ body {
   }
 }
 
+// product-tabs
+.product-tabs {
+  margin-top: 3rem;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 3rem;
+
+  &__btn {
+    border-radius: 50px;
+    padding: 1rem 2rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:not(.btn-primary, .btn-secondary) {
+      color: var(--textColor);
+      background-color: #fff;
+      border: 0.0625rem solid #e0e0e0;
+
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap : 1rem;
+
+    strong, b {
+      font-weight: 600;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+      li {
+        display: flex;
+        gap: .5rem;
+  
+        &::before {
+          content: "";
+          display: block;
+          flex: 0 0 .75rem;
+          height: 0.125rem;
+          margin-top: .625rem;
+          background-color: var(--orangeColor);
+        }
+      }
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #e0e0e0;
+      margin-bottom: 2rem;
+
+      &.product-tab__content-short-table {
+        width: auto;
+        max-width: 50%;
+        margin-top: 2rem;
+
+        @media (max-width: 767px) {
+          max-width: 100%;
+        }
+
+        th {
+          text-align: left;
+        }
+      }
+      
+      th, td {
+        padding: 1rem;
+        border: 1px solid #e0e0e0;
+      }
+
+      tbody {
+        tr {
+          &:nth-child(even) {
+            background-color: #fff;
+          }
+        }
+      }
+
+      thead {
+        tr {
+          background-color: #fff;
+        }
+      }
+    }
+  }
+}
+
 .restaurant-menu {
   h2 {
     color: var(--headTextColor);
@@ -1895,8 +1987,9 @@ body {
       font-size: 1.25rem;
       color: var(--textColor);
       line-height: 120%;
-      font-weight: 300;
+      font-weight: 400;
       margin-bottom: 1rem;
+      line-height: 150%;
     }
 
     &-compound {
