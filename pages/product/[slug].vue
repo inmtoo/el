@@ -256,9 +256,6 @@ const complHtml = typeof compl === "string" && compl.trim()
     .replaceAll("\n", "")
   : "";
 // Конец данных для таба комплектации
-
-
-
     
 
 const product = ref({

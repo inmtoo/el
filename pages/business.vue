@@ -60,13 +60,16 @@
             :item="item"
           />
         </div>
-        <div class="rent-block__more">
+        <div class="catalog-pagination">
+          <Pagination v-model:page="currentPage" :max-page="totalPages" />
+        </div>
+        <!-- <div class="rent-block__more">
           <NuxtLink
             :to="catalogAllLink"
             class="rent-block__more-link btn btn-primary"
             >Показать все</NuxtLink
           >
-        </div>
+        </div> -->
       </div>
     </section>
 
@@ -86,21 +89,7 @@
       </div>
     </section>
 
-    <section class="st-section features">
-      <div class="container">
-        <UITheSectionTitle
-          title="Проекты"
-          subtitle="Реализованные объекты по всей России: паркинги бизнес-центров, отели, АЗС, общественные парковки. Проектирование, поставка и монтаж под ключ."
-        />
-        <div class="features__row">
-          <TheItem
-            v-for="(item, index) in projectItems"
-            :key="index"
-            :item="item"
-          />
-        </div>
-      </div>
-    </section>
+    <Projects />
 
     <section class="st-section info-block info-block--right">
       <div class="container">
@@ -126,8 +115,11 @@
 
 <script setup lang="ts">
 import FAQ from "~/components/blocks/FAQ.vue";
+import Pagination from "~/components/partials/Pagination.vue";
+import { useRoute } from "vue-router";
 import { getPowers } from "~/api/powers";
 import { getProducts } from "~/api/products";
+import Projects from "~/components/blocks/Projects.vue";
 
 const placeholderImg = "/images/main-promo.webp";
 
@@ -139,7 +131,18 @@ const breadcrumbs = [
   { title: "Автомобильные зарядные станции для бизнеса", link: "" },
 ];
 
-const selectedPower = ref("");
+const route = useRoute();
+
+const totalPages = ref(1);
+const totalProducts = ref(0);
+
+function readPowerFromQuery(): string {
+  const p = route.query.power;
+  if (Array.isArray(p)) return String(p[0] ?? "");
+  return p ? String(p) : "";
+}
+
+const selectedPower = ref(readPowerFromQuery());
 const catalogItems = ref<Array<Record<string, any>>>([]);
 const powers = ref<Array<Record<string, any>>>([]);
 
@@ -150,14 +153,19 @@ const catalogAllLink = computed(() => {
 });
 
 async function loadCatalogItems() {
+  const page = Number(route.query.page) || 1;
+  const per_page = 8;
+
   const data = await getProducts({
-    page: 1,
-    per_page: 8,
+    page,
+    per_page,
     category: pageCategorySlug,
     power: selectedPower.value || undefined,
   });
 
   const products = data?.products || [];
+  totalProducts.value = Math.max(0, Number(data?.total_items) || 0);
+  totalPages.value = Math.max(1, Number(data?.total_pages) || 1);
 
   catalogItems.value = products.map((item: any) => {
     const powerAttr = item.attributes?.find(
@@ -189,11 +197,40 @@ powers.value = [...powers.value].sort(
   (a, b) => getPowerValue(a) - getPowerValue(b),
 );
 
-await loadCatalogItems();
+const currentPage = ref(Number(route.query.page) || 1);
+
+watch(
+  () => [route.query.page, route.query.power],
+  async () => {
+    selectedPower.value = readPowerFromQuery();
+    const p = Number(route.query.page) || 1;
+    if (currentPage.value !== p) currentPage.value = p;
+    await loadCatalogItems();
+  },
+  { immediate: true },
+);
+
+watch(currentPage, (p) => {
+  const q = Number(route.query.page) || 1;
+  if (p !== q && p >= 1 && p <= totalPages.value) {
+    navigateTo({
+      path: route.path,
+      query: { ...route.query, page: String(p) },
+    });
+  }
+});
 
 async function onSelectPower(slug: string) {
   selectedPower.value = slug;
-  await loadCatalogItems();
+
+  const next: Record<string, string | string[]> = {
+    ...route.query,
+    page: "1",
+  };
+  if (slug) next.power = slug;
+  else delete next.power;
+
+  await navigateTo({ path: route.path, query: next });
 }
 
 const advantagesItems = [

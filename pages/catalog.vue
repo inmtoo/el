@@ -56,7 +56,7 @@
             :item="{
               title: subcategory.name,
               image: subcategory.slug === 'el-biz' ? catalogPlaceholderImgBusiness : catalogPlaceholderImgPrivate,
-              link: `/catalog?category=${subcategory.slug}&page=1`,
+              link: subcategory.slug === 'el-biz' ? '/business' : '/clients',
             }"
           />
         </div>
