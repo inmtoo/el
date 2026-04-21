@@ -25,7 +25,7 @@
             <h1 v-html="product.productName"></h1>
             <!-- <div class="product__info-descr" v-html="description"></div> -->
             <div v-if="product.charsHtml" class="product__info-params">
-              <div class="product__info-params-title">Характеристики</div>
+              <div class="product__info-params-title">Функционал станции</div>
               <div
                 class="product__info-descr"
                 v-html="product.charsHtml"
@@ -196,6 +196,9 @@ title.value = data.name;
 description.value = data.description;
 image.value = data.image;
 
+console.log('description', description.value);
+
+
 const breadcrumbs = [
   { title: "Главная", link: "/" },
   { title: "Каталог зарядных станций", link: "/catalog" },
@@ -207,14 +210,17 @@ breadcrumbs.push({
 });
 
 const funkczionalStanczii = data.meta_data?.funkczional_stanczii;
-const charsHtml =
-  typeof funkczionalStanczii === "string" && funkczionalStanczii.trim()
-    ? funkczionalStanczii
-      .replaceAll("\r\n\r\n", "<br>")
-      .replaceAll("\r\n", "<br>")
-      .replaceAll("\r", "<br>")
-      .replaceAll("\n", "<br>")
-    : "";
+const formatResponseText = (value: unknown) => {
+  if (typeof value !== "string" || !value.trim()) return "";
+  const tempResponseText = /<[^>]+>/.test(value);
+  if (tempResponseText) return value;
+  return value
+    .replaceAll("\r\n\r\n", "<br>")
+    .replaceAll("\r\n", "<br>")
+    .replaceAll("\r", "<br>")
+    .replaceAll("\n", "<br>");
+};
+const charsHtml = formatResponseText(funkczionalStanczii);
 
 // Данные для таба характеристик
 const techCharsDescription = data.meta_data?.["opisanie_tehnicheskih_har-tik"];

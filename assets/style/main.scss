@@ -627,20 +627,32 @@ body {
 
     }
   }
-
   &__content {
-    display: flex;
-    flex-direction: column;
     gap : 1rem;
+
+    img {
+      max-width: 100%;
+
+      &.emoji {
+        max-width: 1rem;
+        display: inline-block;
+      }
+    }
+    
+    p {
+      margin-bottom: 1rem;
+    }
 
     strong, b {
       font-weight: 600;
+      display: inline-block;
     }
 
     ul {
       display: flex;
       flex-direction: column;
       gap: .5rem;
+      margin-bottom: 1rem;
       li {
         display: flex;
         gap: .5rem;
@@ -2129,9 +2141,6 @@ body {
       ul {
         display: flex;
         flex-direction: column;
-        gap: .5rem;
-        font-size: 1.25rem;
-        font-weight: 300;
 
         li {
           display: flex;
@@ -3040,4 +3049,3 @@ $pagination-gradient: linear-gradient(90deg, #66CB01 0%, #1E95D5 50%, #1E95D5 50
     }
   }
 }
-
