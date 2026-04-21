@@ -196,7 +196,64 @@ title.value = data.name;
 description.value = data.description;
 image.value = data.image;
 
-console.log('description', description.value);
+if (typeof window !== "undefined") {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(`<div id="root">${description.value}</div>`, "text/html");
+  const root = doc.getElementById("root");
+  if (root) {
+    const blockSelector = "p,ul,ol,li,h1,h2,h3,h4,h5,h6,table,thead,tbody,tr,td,th,blockquote,pre";
+    const children = Array.from(root.childNodes);
+    let group: Node[] = [];
+
+    const flushGroup = () => {
+      if (!group.length) return;
+      const wrapper = doc.createElement("div");
+      const first = group[0];
+      if (!first?.parentNode) {
+        group = [];
+        return;
+      }
+      first.parentNode.insertBefore(wrapper, first);
+      const rawGroupHtml = group
+        .map((node) => (node.nodeType === Node.ELEMENT_NODE ? (node as Element).outerHTML : node.textContent || ""))
+        .join("");
+      rawGroupHtml
+        .replace(/\r\n/g, "\n")
+        .replace(/\r/g, "\n")
+        .split(/\n+/)
+        .map((part) => part.trim())
+        .filter((part) => part.length > 0)
+        .forEach((part) => {
+          const p = doc.createElement("p");
+          p.innerHTML = part;
+          wrapper.appendChild(p);
+        });
+      group.forEach((node) => node.parentNode?.removeChild(node));
+      group = [];
+    };
+
+    children.forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        const text = (node.textContent || "").replace(/&nbsp;/gi, "").replace(/\u00a0/g, "").trim();
+        if (!text) return;
+        group.push(node);
+        return;
+      }
+
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const el = node as Element;
+        if (el.matches(blockSelector)) {
+          flushGroup();
+          return;
+        }
+        group.push(node);
+      }
+    });
+
+    flushGroup();
+    description.value = root.innerHTML;
+  }
+}
 
 
 const breadcrumbs = [
