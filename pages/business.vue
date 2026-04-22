@@ -168,16 +168,36 @@ async function loadCatalogItems() {
   totalPages.value = Math.max(1, Number(data?.total_pages) || 1);
 
   catalogItems.value = products.map((item: any) => {
+
+    // Получение атрибута мощности
     const powerAttr = item.attributes?.find(
       (attr: any) => attr.slug === "pa_moshhnost",
     );
     const powerName =
       powerAttr?.options?.map((option: any) => option.name).join(", ") ?? "";
 
+    // Получение атрибута соединения
+    const connectionAttr = item.attributes?.find(
+      (attr: any) => attr.slug === "pa_razem-zaryadki",
+    );
+
+    const connectionName =
+      connectionAttr?.options?.map((option: any) => option.name).join(", ") ?? "";
+
+    // Получение атрибута типа тока
+    const currentAttr = item.attributes?.find(
+      (attr: any) => attr.slug === "pa_tip-toka",
+    );
+    const currentName =
+      currentAttr?.options?.map((option: any) => option.name).join(", ") ?? "";
+
     return {
       id: item.id,
       title: item.name || item.title || "Зарядная станция",
       text: powerName ? `Мощность: ${powerName}` : "",
+      power: powerName,
+      connection: connectionName,
+      current: currentName,
       image: item.image || placeholderImg,
       link: item.slug ? `/product/${item.slug}` : "/catalog",
     };

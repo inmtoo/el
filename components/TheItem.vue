@@ -6,6 +6,17 @@
         <img v-if="item.image" :src="item.image" :alt="item.title"/>
         <img v-else src="/images/placeholder.webp" alt="Placeholder" style="opacity: 0.3;"/>
       </a>
+      <div class="item__img-info" v-if="item.power || item.connection || item.current">
+        <div class="item__img-power" v-if="item.power">
+          {{ item.power }}
+        </div>
+        <div class="item__img-connection" v-if="item.connection">
+          {{ item.connection }}
+        </div>
+        <div class="item__img-current" v-if="item.current">
+          {{ item.current }}
+        </div>
+      </div>
     </div>
     <div class="item__info">
       <div class="item__name" v-if="item.title && item.link == null" v-html="item.title"></div>
@@ -55,7 +66,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 
-defineProps<{
+const props = defineProps<{
   item: Record<string, any>;
   classModifyImg?: string;
 }>();
@@ -81,6 +92,6 @@ onMounted(() => {
       scrub: true,
       fastScrollEnd: true,
     },
-  });
+  });  
 });
 </script>
