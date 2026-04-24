@@ -109,9 +109,10 @@
         </div>
         <div v-show="activeProductTab === 'compatibility'" class="product-tabs__wrap">
           <div class="product-tabs__content product-tabs__content--compatibility">
-            <span v-for="brand in brands" :key="brand.id">
-              {{ brand.name }}
-            </span>
+            <div v-for="brand in brands" :key="brand.id" class="product-tabs__content-brand">
+              <img :src="brand.image" alt="">
+              <span>{{ brand.name }}</span>
+            </div>
           </div>
         </div>
       </div>
