@@ -747,15 +747,34 @@ body {
     }
 
     &--compatibility {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
       gap: 1rem;
+
+      @media (max-width: 767px) {
+        grid-template-columns: repeat(3, 1fr);
+      }
 
       span {
         font-size: 1.25rem;
         font-weight: 500;
         color: var(--linkMenuColor);
+        margin-top: auto;
       }
+    }
+
+    &-brand {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      padding: 1.25rem;
+      border-radius: 15px;
+      border: 1px solid var(--orangeColor);
+      gap: 2rem;
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      color: var(--linkMenuColor);
     }
   }
 }
